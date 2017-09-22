@@ -64,9 +64,6 @@ class Hypothesis{
         * if in course of time it is found that we need a function to compare 
         * two different hypothesis, make this a static method with two arguments
         */
-        if(h.attributes[TYPE] == 1 && this.attributes[TYPE] == 0){
-            return false;
-        }
         for(int i = 0; i < this.attributes.length; i++){
             if(!moreGeneralAttribute(this.attributes[i], h.attributes[i])){
                 return false;
