@@ -70,13 +70,11 @@ class Hypothesis{
         /*
         Check if the current hypothesis is more general than hypothesis 'h'.
         */
-        // Remember to use the oneVsall function from candidate elimination
-        // algorithm. Or do something else similar to that before calling this
-        // method. Or better yet, do this while file reading itself?
         if(h.attributes[TYPE] == 1 && this.attributes[TYPE] == 0){
             return false;
         } else{
             // new logic
+            return true;
         }
     }
 }

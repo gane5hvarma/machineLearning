@@ -6,7 +6,7 @@ import java.util.*;
 
 
 class Reader{
-    public static ArrayList<Hypothesis> read(String filename) throws 
+    public static ArrayList<Hypothesis> read(String filename, int type) throws 
     FileNotFoundException {
         ArrayList<Hypothesis> hypothesis = new ArrayList<Hypothesis>();
         Scanner in = new Scanner(new FileReader(filename));
@@ -19,6 +19,7 @@ class Reader{
             }
             Hypothesis hypo = new Hypothesis(attributes);            
             hypo.setName(columns[0]);
+            hypo.oneVsall(type);
             hypothesis.add(hypo);
         }
         return hypothesis;
@@ -33,7 +34,7 @@ class Reader{
     */
     public static void main(String[] args) {
         try{
-            ArrayList<Hypothesis> hypothesis = Reader.read("zoo.data");
+            ArrayList<Hypothesis> hypothesis = Reader.read("zoo.data",1);
             for (int i = 0;i < hypothesis.size() ;i++ ) {
                 System.out.println(hypothesis.get(i).attributes[16]);
             }
