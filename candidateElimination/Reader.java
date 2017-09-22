@@ -20,7 +20,7 @@ class Reader{
             TrainingData train = new TrainingData(attributes);            
             train.setName(columns[0]);
             train.oneVsall(type);
-            training.add(hypo);
+            training.add(train);
         }
         return training;
     }
