@@ -39,10 +39,10 @@ class Hypothesis{
                 count++;
             }
         }
-        if(count == this.attributes.length && t.attributes[TYPE] == 1){
+        if(count == this.attributes.length && t.getClassNumber() == 1){
             return true;
         }
-        if(count != this.attributes.length && t.attributes[TYPE] == 0){
+        if(count != this.attributes.length && t.getClassNumber() == 0){
             return true;
         }
         return false;

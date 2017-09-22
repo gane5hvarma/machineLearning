@@ -5,7 +5,6 @@ import java.util.*;
 class TrainingData {
     int[] attributes;
     String name;
-    public static final int TYPE = 16;
     TrainingData(int[] attributes){
         this.attributes = attributes;
     }
@@ -13,10 +12,13 @@ class TrainingData {
         this.name = name;
     }
     void oneVsall(int type){
-        if (this.attributes[TYPE] == type) {
-            this.attributes[TYPE] = 1;
+        if (this.attributes[this.attributes.length - 1] == type) {
+            this.attributes[this.attributes.length - 1] = 1;
         } else{
-            this.attributes[TYPE] = 0;
+            this.attributes[this.attributes.length - 1] = 0;
         }
+    }
+    int getClassNumber(){
+        return this.attributes[this.attributes.length - 1];
     }
 }
