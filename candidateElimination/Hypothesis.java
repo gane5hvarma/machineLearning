@@ -54,7 +54,11 @@ class Hypothesis{
             return false;
         }
     } 
-    boolean isConsistent(Hypothesis h){ // h is the training data
+    boolean isConsistent(Hypothesis h){
+        /*
+        * here h is the training data and we are checking if current hyopthesis
+        * is consistent with training data.
+        */
         int count = 0;
         for(int i = 0; i < h.attributes.length; i++){
             if(isEqual(this.attributes[i], h.attributes[i])){
@@ -92,13 +96,5 @@ class Hypothesis{
             }
         }
         return true;
-    }
-    Hypothesis minimalSpecialization(Hypothesis h){
-        /*
-        * In the case that the curreng hypothesis is not consistent with the
-        * TRAINING DATA h, find a minimalSpecialization of it that does.
-        * Note that, we need to call this in case of a negative encounter in CE
-        */
-        
     }
 }
