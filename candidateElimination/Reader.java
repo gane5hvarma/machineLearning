@@ -6,9 +6,9 @@ import java.util.*;
 
 
 class Reader{
-    public static ArrayList<Hypothesis> read(String filename, int type) throws 
+    public static ArrayList<TrainingData> read(String filename, int type) throws 
     FileNotFoundException {
-        ArrayList<Hypothesis> hypothesis = new ArrayList<Hypothesis>();
+        ArrayList<TrainingData> training = new ArrayList<TrainingData>();
         Scanner in = new Scanner(new FileReader(filename));
         while(in.hasNext()){
             String[] columns = in.next().split(",");
@@ -17,12 +17,12 @@ class Reader{
             for (int i=1;i<columns.length;i++ ) {
                 attributes[j++] = Integer.parseInt(columns[i]);
             }
-            Hypothesis hypo = new Hypothesis(attributes);            
-            hypo.setName(columns[0]);
-            hypo.oneVsall(type);
-            hypothesis.add(hypo);
+            TrainingData train = new TrainingData(attributes);            
+            train.setName(columns[0]);
+            train.oneVsall(type);
+            training.add(hypo);
         }
-        return hypothesis;
+        return training;
     }
     /*
     * Eventually move this main away from this class and put it in some other 
@@ -31,6 +31,7 @@ class Reader{
 
     * Also note that to compile use: javac -d . filename.java
     * To run, use java candidate.ClassName
+
     public static void main(String[] args) {
         try{
             ArrayList<Hypothesis> hypothesis = Reader.read("zoo.data",1);

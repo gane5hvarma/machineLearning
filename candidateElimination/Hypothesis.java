@@ -5,44 +5,14 @@ import java.util.*;
 class Hypothesis{
     public static final int ALL = 999;
     public static final int NONE = 111;
-    public static final int HAIR = 0;
-    public static final int FEATHERS = 1;
-    public static final int EGGS = 2;
-    public static final int MILK = 3;
-    public static final int AIRBORNE = 4;
-    public static final int AQUATIC = 5;
-    public static final int PREDATOR = 6;
-    public static final int TOOTHED = 7;
-    public static final int BACKBONE = 8;
-    public static final int BREATHES = 9;
-    public static final int VENOMOUS = 10;
-    public static final int FINS = 11;
-    public static final int TAIL = 12;
-    public static final int DOMESTIC = 13;
-    public static final int CATSIZE = 14;
-    public static final int LEGS = 15;
     public static final int TYPE = 16;
     static int[] GENERAL = {ALL,ALL,ALL,ALL,ALL,ALL,ALL,ALL,ALL, ALL,ALL,ALL,
                             ALL,ALL,ALL,ALL};
     static int[] SPECIFIC = {NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
                              NONE,NONE,NONE,NONE,NONE,NONE};
-    String name;
-    int hair, feathers, eggs, milk, airborne, aquatic, predator, toothed;
-    int backbone, breathes, venomous, fins, tail, domestic, catsize;
-    int legs, type;
     int[] attributes;
     Hypothesis(int[] attributes){
         this.attributes = attributes;
-    }
-    void setName(String name){
-        this.name = name;
-    }
-    void oneVsall(int type){
-        if (this.attributes[TYPE] == type) {
-            this.attributes[TYPE] = 1;
-        } else{
-            this.attributes[TYPE] = 0;
-        }
     }
     boolean isEqual(int attr1, int attr2){
         if((attr1 == NONE && attr2 != NONE)||(attr2 == NONE && attr1 !=NONE)){
@@ -58,18 +28,21 @@ class Hypothesis{
             return false;
         }
     } 
-    boolean isConsistent(Hypothesis h){
+    boolean isConsistent(TrainingData t){
         /*
-        * here h is the training data and we are checking if current hyopthesis
+        * here t is the training data and we are checking if current hyopthesis
         * is consistent with training data.
         */
         int count = 0;
-        for(int i = 0; i < h.attributes.length; i++){
-            if(isEqual(this.attributes[i], h.attributes[i])){
+        for(int i = 0; i < this.attributes.length; i++){
+            if(isEqual(this.attributes[i], t.attributes[i])){
                 count++;
             }
         }
-        if(count == h.attributes.length){
+        if(count == this.attributes.length && t.attributes[TYPE] == 1){
+            return true;
+        }
+        if(count != this.attributes.length && t.attributes[TYPE] == 0){
             return true;
         }
         return false;
@@ -94,20 +67,11 @@ class Hypothesis{
         if(h.attributes[TYPE] == 1 && this.attributes[TYPE] == 0){
             return false;
         }
-        for(int i = 0; i < this.attributes.length - 1; i++){
+        for(int i = 0; i < this.attributes.length; i++){
             if(!moreGeneralAttribute(this.attributes[i], h.attributes[i])){
                 return false;
             }
         }
         return true;
     }
-    /*public static void main(String[] args) {
-        // This is here just for testing purposes. Delete in the final product
-        int[] t = {1,2,6,3,2,7,1,2,6,3,2,7,1,2,6,3,45};
-        int[] h = {1,2,ALL,3,ALL,ALL,1,2,6,3,2,NONE,1,2,6,3,45};
-        Hypothesis training = new Hypothesis(t);
-        Hypothesis hypothesis = new Hypothesis(h);
-        System.out.println(hypothesis.isConsistent(training));
-        System.out.println(hypothesis.isMoreGeneral(training));
-    }*/
 }
