@@ -30,17 +30,17 @@ class Hypothesis{
     Hypothesis(int[] attributes){
         this.attributes = attributes;
     }
-    public void setName(String name){
+    void setName(String name){
         this.name = name;
     }
-    public void oneVsall(int type){
+    void oneVsall(int type){
         if (this.attributes[TYPE] == type) {
             this.attributes[TYPE] = 1;
         } else{
             this.attributes[TYPE] = 0;
         }
     }
-    public boolean isEqual(int attr1, int attr2){
+    boolean isEqual(int attr1, int attr2){
         if((attr1 == NONE && attr2 != NONE)||(attr2 == NONE && attr1 !=NONE)){
             return false;
         }
@@ -54,9 +54,9 @@ class Hypothesis{
             return false;
         }
     } 
-    public boolean isConsistent(Hypothesis h){ // h is the training data
+    boolean isConsistent(Hypothesis h){ // h is the training data
         int count = 0;
-        for(int i=0;i<h.attributes.length;i++){
+        for(int i = 0; i < h.attributes.length; i++){
             if(isEqual(this.attributes[i], h.attributes[i])){
                 count++;
             }
@@ -66,15 +66,39 @@ class Hypothesis{
         }
         return false;
     }
-    public boolean isMoreGeneral(Hypothesis h){
+    boolean moreGeneralAttribute(int attr1, int attr2){
         /*
-        Check if the current hypothesis is more general than hypothesis 'h'.
+        * Check if attr1 is more general than attr2. More general means:
+        * if attr2 is null | attr1 == attr2 | attr1 == ALL, attr1 is more
+        * general
+        */
+        if( attr1 == attr2 || attr2 == NONE || attr1 == ALL){
+            return true;
+        }
+        return false;
+    }
+    boolean isMoreGeneral(Hypothesis h){
+        /*
+        * Check if the current hypothesis is more general than hypothesis 'h'.
+        * if in course of time it is found that we need a function to compare 
+        * two different hypothesis, make this a static method with two arguments
         */
         if(h.attributes[TYPE] == 1 && this.attributes[TYPE] == 0){
             return false;
-        } else{
-            // new logic
-            return true;
         }
+        for(int i = 0; i < this.attributes.length - 1; i++){
+            if(!moreGeneralAttribute(this.attributes[i], h.attributes[i])){
+                return false;
+            }
+        }
+        return true;
+    }
+    Hypothesis minimalSpecialization(Hypothesis h){
+        /*
+        * In the case that the curreng hypothesis is not consistent with the
+        * TRAINING DATA h, find a minimalSpecialization of it that does.
+        * Note that, we need to call this in case of a negative encounter in CE
+        */
+        
     }
 }

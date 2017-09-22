@@ -36,8 +36,7 @@ class Reader{
         try{
             ArrayList<Hypothesis> hypothesis = Reader.read("zoo.data",1);
             for (int i = 0;i < hypothesis.size() ;i++ ) {
-                System.out.println(hypothesis.get(i).
-                                   attributes[Hypothesis.TYPE]);
+                System.out.println(hypothesis.get(i).attributes[Hypothesis.TYPE]);
             }
         }catch(FileNotFoundException e){
             System.out.println("File not found");
