@@ -12,7 +12,7 @@ class Reader{
         Scanner in = new Scanner(new FileReader(filename));
         while(in.hasNext()){
             String[] columns = in.next().split(",");
-            int[] attributes = {0};
+            int[] attributes = new int[17];
             int j = 0;
             for (int i=1;i<columns.length;i++ ) {
                 attributes[j++] = Integer.parseInt(columns[i]);
@@ -22,5 +22,24 @@ class Reader{
             hypothesis.add(hypo);
         }
         return hypothesis;
+    }
+    /*
+    * Eventually move this main away from this class and put it in some other 
+    * class that acts as entry point to this pacakge. This class should only 
+    * deal with file reading.
+
+    * Also note that to compile use: javac -d . filename.java
+    * To run, use java candidate.ClassName
+    */
+    public static void main(String[] args) {
+        try{
+            ArrayList<Hypothesis> hypothesis = Reader.read("zoo.data");
+            for (int i = 0;i < hypothesis.size() ;i++ ) {
+                System.out.println(hypothesis.get(i).attributes[16]);
+            }
+        }catch(FileNotFoundException e){
+            System.out.println("File not found");
+            return;
+        }
     }
 }

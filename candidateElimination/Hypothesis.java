@@ -33,6 +33,13 @@ class Hypothesis{
     public void setName(String name){
         this.name = name;
     }
+    public void oneVsall(int type){
+        if (this.attributes[TYPE] == type) {
+            this.attributes[TYPE] = 1;
+        } else{
+            this.attributes[TYPE] = 0;
+        }
+    }
     public boolean isEqual(int attr1, int attr2){
         if((attr1 == NONE && attr2 != NONE)||(attr2 == NONE && attr1 !=NONE)){
             return false;
@@ -59,7 +66,17 @@ class Hypothesis{
         }
         return false;
     }
-    public void isMoreGeneral(Hypothesis h){
-
+    public boolean isMoreGeneral(Hypothesis h){
+        /*
+        Check if the current hypothesis is more general than hypothesis 'h'.
+        */
+        // Remember to use the oneVsall function from candidate elimination
+        // algorithm. Or do something else similar to that before calling this
+        // method. Or better yet, do this while file reading itself?
+        if(h.attributes[TYPE] == 1 && this.attributes[TYPE] == 0){
+            return false;
+        } else{
+            // new logic
+        }
     }
 }
