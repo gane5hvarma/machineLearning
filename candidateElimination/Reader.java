@@ -31,7 +31,6 @@ class Reader{
 
     * Also note that to compile use: javac -d . filename.java
     * To run, use java candidate.ClassName
-    */
     public static void main(String[] args) {
         try{
             ArrayList<Hypothesis> hypothesis = Reader.read("zoo.data",1);
@@ -42,5 +41,5 @@ class Reader{
             System.out.println("File not found");
             return;
         }
-    }
+    } */
 }

@@ -22,6 +22,10 @@ class Hypothesis{
     public static final int CATSIZE = 14;
     public static final int LEGS = 15;
     public static final int TYPE = 16;
+    static int[] GENERAL = {ALL,ALL,ALL,ALL,ALL,ALL,ALL,ALL,ALL, ALL,ALL,ALL,
+                            ALL,ALL,ALL,ALL};
+    static int[] SPECIFIC = {NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,NONE,
+                             NONE,NONE,NONE,NONE,NONE,NONE};
     String name;
     int hair, feathers, eggs, milk, airborne, aquatic, predator, toothed;
     int backbone, breathes, venomous, fins, tail, domestic, catsize;
@@ -97,4 +101,13 @@ class Hypothesis{
         }
         return true;
     }
+    /*public static void main(String[] args) {
+        // This is here just for testing purposes. Delete in the final product
+        int[] t = {1,2,6,3,2,7,1,2,6,3,2,7,1,2,6,3,45};
+        int[] h = {1,2,ALL,3,ALL,ALL,1,2,6,3,2,NONE,1,2,6,3,45};
+        Hypothesis training = new Hypothesis(t);
+        Hypothesis hypothesis = new Hypothesis(h);
+        System.out.println(hypothesis.isConsistent(training));
+        System.out.println(hypothesis.isMoreGeneral(training));
+    }*/
 }
