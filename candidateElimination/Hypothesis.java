@@ -14,6 +14,21 @@ class Hypothesis{
     Hypothesis(int[] attributes){
         this.attributes = attributes;
     }
+    int[] acceptableValues(int i){
+        /*
+        * Returns all acceptable values that an attribute may have.
+        */
+        int[] accept;
+        if(i < 0 || i > 16){
+            accept = new int[]{};
+        }
+        else if(i == 13){
+            accept = new int[]{0,2,4,5,6,8};
+        }else{
+            accept = new int[]{0,1};
+        }
+        return accept;
+    }
     boolean isEqual(int attr1, int attr2){
         if((attr1 == NONE && attr2 != NONE)||(attr2 == NONE && attr1 !=NONE)){
             return false;
@@ -70,5 +85,12 @@ class Hypothesis{
             }
         }
         return true;
+    }
+    void printHypothesis(){
+        System.out.print("<");
+        for (int i = 0; i < this.attributes.length; i++ ) {
+            System.out.print(this.attributes[i] +", ");
+        }
+        System.out.println(">");
     }
 }

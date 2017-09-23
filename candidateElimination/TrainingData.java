@@ -21,4 +21,11 @@ class TrainingData {
     int getClassNumber(){
         return this.attributes[this.attributes.length - 1];
     }
+    void printTrainingData(){
+        System.out.print("<");
+        for (int i = 0; i < this.attributes.length; i++ ) {
+            System.out.print(this.attributes[i]+", ");
+        }
+        System.out.println(">");
+    }
 }
