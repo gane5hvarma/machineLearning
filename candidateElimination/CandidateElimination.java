@@ -103,7 +103,7 @@ class CandidateElimination{
             h.printHypothesis();
             generalBoundary.add(h);
         }
-        minifyGeneralBoundary();
+        //minifyGeneralBoundary();
     }
     void minimalGeneralization(Hypothesis s, TrainingData t){
         /*
