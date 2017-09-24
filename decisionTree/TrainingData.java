@@ -2,6 +2,7 @@ package decision_tree;
 
 import java.util.*;
 import java.util.Arrays;
+import java.lang.*;
 
 class TrainingData implements Comparable<TrainingData>{
     String[] attributes;
@@ -65,11 +66,8 @@ class TrainingData implements Comparable<TrainingData>{
         return accepted_values;
 
     }
-    boolean getValue(){
-        // <=50k => negativeValue.
-        if(this.attributes[attributes.length - 1].equalsIgnoreCase("<=50K")){
-            return false;
-        }
-        return true;
+    String getValue(){
+        // <=50k => PostiveExample.
+        return attributes[attributes.length - 1];
     }
 }

@@ -6,15 +6,20 @@ import java.util.*;
 
 
 class Reader{
-    public static ArrayList<TrainingData> read(String filename, int type) throws 
+    public static TrainingData[] read(String filename) throws 
     FileNotFoundException {
         ArrayList<TrainingData> training = new ArrayList<TrainingData>();
         Scanner in = new Scanner(new FileReader(filename));
         while(in.hasNext()){ 
-            String[] attributes = in.next().split(",");
+            String[] attributes = in.nextLine().split(",");
+            for (int i = 0; i < attributes.length; i++ ) {
+                attributes[i] = attributes[i].trim();
+            }
             TrainingData train = new TrainingData(attributes);
             training.add(train);
         }
-        return training;
+        TrainingData[] examples = new TrainingData[training.size()];
+        examples = training.toArray(examples);
+        return examples;
     }
 }
