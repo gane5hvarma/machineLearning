@@ -24,12 +24,12 @@ class CandidateElimination{
         for (int i = generalBoundary.size() - 1; i > 0; i-- ) {
             for (int j = generalBoundary.size() - 1; j > 0; j--) {
                 try{
-                    if(!(generalBoundary.get(i).isMoreGeneral(generalBoundary.get(j)))){
+                    if(generalBoundary.get(i).isMoreGeneral(generalBoundary.get(j))){
                         if (i != j){
                             System.out.print("removing from generalBoundary");
                             generalBoundary.get(i).printHypothesis();
                             generalBoundary.get(j).printHypothesis();
-                            generalBoundary.remove(i);                          
+                            generalBoundary.remove(j);                          
                         }
                     }
                 }catch(java.lang.IndexOutOfBoundsException e){
