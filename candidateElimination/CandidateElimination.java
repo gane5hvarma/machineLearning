@@ -24,12 +24,9 @@ class CandidateElimination{
         for (int i = generalBoundary.size() - 1; i > 0; i-- ) {
             for (int j = generalBoundary.size() - 1; j > 0; j--) {
                 try{
-                    if(generalBoundary.get(i).isMoreGeneral(generalBoundary.get(j))){
+                    if(!generalBoundary.get(i).isMoreGeneral(generalBoundary.get(j))){
                         if (i != j){
-                            System.out.print("removing from generalBoundary");
-                            generalBoundary.get(i).printHypothesis();
-                            generalBoundary.get(j).printHypothesis();
-                            generalBoundary.remove(j);                          
+                            generalBoundary.remove(i);                          
                         }
                     }
                 }catch(java.lang.IndexOutOfBoundsException e){
@@ -99,8 +96,6 @@ class CandidateElimination{
             }
         }
         for (Hypothesis h: minSpec) {
-            System.out.print("adding to generalBoundary:");
-            h.printHypothesis();
             generalBoundary.add(h);
         }
         //minifyGeneralBoundary();
@@ -120,7 +115,6 @@ class CandidateElimination{
                 }
             }
         }
-        System.out.println(generalBoundary.size());
         for (int i = 0; i < generalBoundary.size() ; i++ ) {
             Hypothesis gen = generalBoundary.get(i);
             if(gen.isMoreGeneral(s)){
@@ -146,9 +140,6 @@ class CandidateElimination{
             // Test for inconsistency with negative examples once.
             if(!generalBoundary.get(i).isConsistent(t)){
                 Hypothesis g = generalBoundary.get(i);
-                System.out.println("remoing from generalBoundary");
-                g.printHypothesis();
-                t.printTrainingData();
                 generalBoundary.remove(i);
                 minimalSpecialization(g, t);
             }
@@ -185,7 +176,6 @@ class CandidateElimination{
             if(t.attributes[Hypothesis.TYPE] == 1){
                 postiveEncounter(t);
             }else{
-                System.out.println("negativeEncounter");
                 negativeEncounter(t);
             }
         }
@@ -203,7 +193,7 @@ class CandidateElimination{
         return;
     }
     public static void main(String[] args) {
-        CandidateElimination ce = new CandidateElimination(1);
+        CandidateElimination ce = new CandidateElimination(2);
         ce.candidateElimination();
     }
 }
