@@ -98,7 +98,7 @@ class CandidateElimination{
         for (Hypothesis h: minSpec) {
             generalBoundary.add(h);
         }
-        //minifyGeneralBoundary();
+        minifyGeneralBoundary();
     }
     void minimalGeneralization(Hypothesis s, TrainingData t){
         /*
@@ -193,7 +193,7 @@ class CandidateElimination{
         return;
     }
     public static void main(String[] args) {
-        CandidateElimination ce = new CandidateElimination(2);
+        CandidateElimination ce = new CandidateElimination(1);
         ce.candidateElimination();
     }
 }

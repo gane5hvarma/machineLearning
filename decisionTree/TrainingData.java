@@ -105,7 +105,7 @@ class TrainingData implements Comparable<TrainingData>{
 
     }
     String getValue(){
-        // <=50k => PostiveExample.
+        //Returns classification of the training example
         return attributes[attributes.length - 1];
     }
 }
