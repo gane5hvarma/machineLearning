@@ -4,6 +4,7 @@ import java.util.*;
 
 class TreeNode{
     Attribute splitAttribute;
+    String splitValue;
     ArrayList<TrainingData> data;
     String classification;
     boolean isleaf = true;
@@ -27,6 +28,9 @@ class TreeNode{
     void setSplitAttribute(Attribute splitAttribute){
         this.splitAttribute = splitAttribute;
     }
+    void setSplitValue(String splitValue){
+        this.splitValue = splitValue;
+    }
     void setClassification(){
         /*
         * We need to set Classification in two cases. One, while pruning.
@@ -40,7 +44,8 @@ class TreeNode{
         }
         else if(data.size() == 0){
             // Figure something better out
-            return ">50K"; 
+            this.classification = ">50K";
+            return; 
         }
         else{
             // This is when it's not a leafNode. That is useful while pruning. 
