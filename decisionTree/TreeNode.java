@@ -3,6 +3,7 @@ package decision_tree;
 import java.util.*;
 
 class TreeNode{
+    Attribute splitAttribute;
     ArrayList<TrainingData> data;
     String classification;
     boolean isleaf = true;
@@ -23,6 +24,9 @@ class TreeNode{
             }
         }
     }
+    void setSplitAttribute(Attribute splitAttribute){
+        this.splitAttribute = splitAttribute;
+    }
     void setClassification(){
         /*
         * We need to set Classification in two cases. One, while pruning.
@@ -35,7 +39,8 @@ class TreeNode{
             return;
         }
         else if(data.size() == 0){
-            // Figure something out 
+            // Figure something better out
+            return ">50K"; 
         }
         else{
             // This is when it's not a leafNode. That is useful while pruning. 
