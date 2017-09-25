@@ -105,15 +105,16 @@ class PreProcessor{
             double weight = -1 * len/this.examples.length;
             double posWeight = posExamples/len;
             double negWeight = negExamples/len;
-            if(posWeight == 0){
+            if(posWeight == 0 || Double.isNaN(posWeight)){
                 posWeight = 1;
             }
-            if (negWeight == 0) {
+            if (negWeight == 0 || Double.isNaN(negWeight)) {
                 negWeight = 1;
             }
-            System.out.println(weight + " " + posWeight + " " + negWeight);
+            // System.out.println(len + "\t" + weight + "\t" + posWeight + "\t" + negWeight);
             double entropy = posWeight*(Math.log(posWeight)/Math.log(2)) 
                              + negWeight*(Math.log(negWeight)/Math.log(2));
+
             currEntropy += (weight*entropy);
         }
         return this.Entropy - currEntropy;
@@ -184,16 +185,23 @@ class PreProcessor{
     public static void main(String[] args) {
         TrainingData[] examples;
         try{
-            examples = Reader.read("adult.data");
+            examples = Reader.read("tempo.data");
         }catch(FileNotFoundException e){
             examples = null;
         }
         PreProcessor pro = new PreProcessor(examples);
-        pro.makeDiscrete();
-        try{
-            pro.writeToFile("tempo.data");
-        }catch(IOException e){
-            System.out.println("something went wrong");
+        // System.out.println(pro.getInformationGain(13));
+        double ig = 0;
+        double max = 0;
+        int maxi = 0;
+        for (int i = 0; i < pro.examples[0].attributes.length - 1; i++ ) {
+            ig = pro.getInformationGain(i);
+            if (ig > max) {
+                max = ig;
+                maxi = i;
+            }
+            System.out.println(i + " " + ig);
         }
+        System.out.println(TrainingData.features.get(maxi)+":"+max);
     }
 }
