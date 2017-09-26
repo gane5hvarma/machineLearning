@@ -39,6 +39,28 @@ class PreProcessor{
                          - negWeight*(Math.log(negWeight)/Math.log(2));
         this.Entropy = entropy;                         
     }
+    static double getEntropy(ArrayList<TrainingData> examples){
+        double positiveExamples = 0;
+        double negativeExamples = 0;
+        for (TrainingData example : examples) {
+            if(example.getValue().equalsIgnoreCase("<=50K")){
+                positiveExamples++;
+            }else{
+                negativeExamples++;
+            }
+        }
+        double posWeight = positiveExamples/examples.size();
+        double negWeight = negativeExamples/examples.size();
+        if(posWeight == 0){
+            posWeight = 1;
+        }
+        if (negWeight == 0) {
+            negWeight = 1;
+        }
+        double entropy = -posWeight*(Math.log(posWeight)/Math.log(2)) 
+                         - negWeight*(Math.log(negWeight)/Math.log(2));
+        return entropy;   
+    }
     void sortExamples(int i){
         Arrays.sort(examples, new Comparator<TrainingData>(){
             @Override
@@ -118,6 +140,55 @@ class PreProcessor{
             currEntropy += (weight*entropy);
         }
         return this.Entropy - currEntropy;
+    }
+    static double getInformationGain(ArrayList<TrainingData> examples, 
+                                    int index, double Entropy){
+        double currEntropy = 0;
+        String[] values = TrainingData.getAcceptedValues(index);
+        for(String value: values){
+            double posExamples = 0;
+            double negExamples = 0;
+            double len = 0;
+            for (TrainingData example : examples) {
+                if(example.attributes[index].equalsIgnoreCase(value)){
+                    len++;
+                    if(example.getValue().equalsIgnoreCase("<=50K")){
+                        posExamples++;  
+                    }else{
+                        negExamples++;
+                    }
+                }
+            }
+            double weight = -1 * len/examples.size();
+            double posWeight = posExamples/len;
+            double negWeight = negExamples/len;
+            if(posWeight == 0 || Double.isNaN(posWeight)){
+                posWeight = 1;
+            }
+            if (negWeight == 0 || Double.isNaN(negWeight)) {
+                negWeight = 1;
+            }
+            // System.out.println(len + "\t" + weight + "\t" + posWeight + "\t" + negWeight);
+            double entropy = posWeight*(Math.log(posWeight)/Math.log(2)) 
+                             + negWeight*(Math.log(negWeight)/Math.log(2));
+
+            currEntropy += (weight*entropy);
+        }
+        return Entropy - currEntropy;
+    }
+    static Attribute getBestAttribute(ArrayList<Attribute> attributes, 
+        ArrayList<TrainingData> examples, double Entropy){
+        Attribute bestAttribute = attributes.get(0);
+        double maxInformationGain = getInformationGain(examples, 0, Entropy);
+        for(Attribute attribute : attributes){
+            int index = attribute.index;
+            double ig = getInformationGain(examples, index, Entropy);
+            if(ig > maxInformationGain){
+                maxInformationGain = ig;
+                bestAttribute = attribute;
+            }
+        }
+        return bestAttribute;
     }
     double getInformationGain(int index, double threshold){
         double currEntropy = 0;
