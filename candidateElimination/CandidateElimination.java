@@ -24,14 +24,22 @@ class CandidateElimination{
     void minifyGeneralBoundary(){
         Hypothesis[] genBound = new Hypothesis[generalBoundary.size()];
         genBound = generalBoundary.toArray(genBound);
-        for(Hypothesis hypo : genBound){
+        for(int j = 0; j < genBound.length; j++){
+            Hypothesis hypo = genBound[j];
+            if(hypo == null){
+                continue;
+            }
             for(int i = 0; i < genBound.length; i++){
-                if(Arrays.equals(hypo.attributes, genBound[i].attributes)){
+                if(genBound[i] == null){
+                    continue;
+                }
+                if(i == j){
                     continue;
                 }else{
                     if(genBound[i].isMoreGeneral(hypo)){
-                        hypo.printHypothesis();
-                        genBound[i].printHypothesis();
+                        // hypo.printHypothesis();
+                        // genBound[i].printHypothesis();
+                        genBound[i] = null;
                         generalBoundary.remove(hypo);
                     }
                 }
@@ -56,7 +64,6 @@ class CandidateElimination{
                 return true;
             }
         }
-        specificBoundary.get(0).printHypothesis();
         return false;
     }
     void minimalSpecialization(Hypothesis g, TrainingData t){
@@ -93,6 +100,7 @@ class CandidateElimination{
                 }
                 else if (g.attributes[i] == Hypothesis.NONE) {
                     System.out.println("Can't be specialized more");
+                    return;
                 }
                 else{
                     Hypothesis h;
@@ -209,7 +217,7 @@ class CandidateElimination{
         return;
     }
     public static void main(String[] args) {
-        CandidateElimination ce = new CandidateElimination(3);
+        CandidateElimination ce = new CandidateElimination(5);
         ce.candidateElimination();
     }
 }
