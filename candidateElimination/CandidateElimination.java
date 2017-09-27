@@ -2,6 +2,7 @@ package candidate;
 
 import java.util.*;
 import java.io.*;
+import java.util.Arrays;
 
 class CandidateElimination{
     Hypothesis mostGeneral = new Hypothesis(Hypothesis.GENERAL);
@@ -21,19 +22,33 @@ class CandidateElimination{
         specificBoundary.add(mostSpecific);
     }
     void minifyGeneralBoundary(){
-        for (int i = generalBoundary.size() - 1; i > 0; i-- ) {
-            for (int j = generalBoundary.size() - 1; j > 0; j--) {
-                try{
-                    if(!generalBoundary.get(i).isMoreGeneral(generalBoundary.get(j))){
-                        if (i != j){
-                            generalBoundary.remove(i);                          
-                        }
-                    }
-                }catch(java.lang.IndexOutOfBoundsException e){
+        Hypothesis[] genBound = new Hypothesis[generalBoundary.size()];
+        genBound = generalBoundary.toArray(genBound);
+        for(Hypothesis hypo : genBound){
+            for(int i = 0; i < genBound.length; i++){
+                if(Arrays.equals(hypo.attributes, genBound[i].attributes)){
                     continue;
+                }else{
+                    if(genBound[i].isMoreGeneral(hypo)){
+                        hypo.printHypothesis();
+                        genBound[i].printHypothesis();
+                        generalBoundary.remove(hypo);
+                    }
                 }
             }
         }
+        // for(int i = generalBoundary.size() - 1; i >= 0; i--){
+        //     for(int j = 0; (j != i ) && (j < 1); j++){
+        //         if(generalBoundary.get(j).isMoreGeneral(this.generalBoundary.get(i))){
+        //             for(int k = i; k < generalBoundary.size() - 1; k++){
+        //                 generalBoundary.set(k, generalBoundary.get(k+1));
+        //             }
+        //             System.out.println("removing");
+        //             generalBoundary.remove(generalBoundary.size() -1);
+        //             break;
+        //         }
+        //     }
+        // }
     }
     boolean acceptableSpecialization(Hypothesis h){
         for (Hypothesis s: specificBoundary ) {
@@ -41,6 +56,7 @@ class CandidateElimination{
                 return true;
             }
         }
+        specificBoundary.get(0).printHypothesis();
         return false;
     }
     void minimalSpecialization(Hypothesis g, TrainingData t){
@@ -193,7 +209,7 @@ class CandidateElimination{
         return;
     }
     public static void main(String[] args) {
-        CandidateElimination ce = new CandidateElimination(1);
+        CandidateElimination ce = new CandidateElimination(3);
         ce.candidateElimination();
     }
 }

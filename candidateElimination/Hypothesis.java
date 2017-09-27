@@ -79,13 +79,19 @@ class Hypothesis{
         * if in course of time it is found that we need a function to compare 
         * two different hypothesis, make this a static method with two arguments
         */
+        int posCount = 0;
         for(int i = 0; i < this.attributes.length; i++){
-            if(!moreGeneralAttribute(this.attributes[i], h.attributes[i])){
-                return false;
+            if(moreGeneralAttribute(this.attributes[i], h.attributes[i])){
+                posCount++;
             }
         }
-        return true;
+        if (posCount == h.attributes.length) {
+            return true;
+        }
+        return false;
     }
+
+
     void printHypothesis(){
         System.out.print("<");
         for (int i = 0; i < this.attributes.length; i++ ) {
@@ -93,4 +99,11 @@ class Hypothesis{
         }
         System.out.println(">");
     }
+    // public static void main(String[] args) {
+    //     int[] attr1 = {999, 0, 999, 0, 999, 999, 999, 999, 999, 999, 999, 0, 0, 999, 1, 999};
+    //     int[] attr2 ={0, 0, 999, 0, 0, 999, 1, 1, 1, 999, 999, 0, 0, 1, 0, 0};
+    //     Hypothesis h1 = new Hypothesis(attr1);
+    //     Hypothesis h2 = new Hypothesis(attr2);
+    //     System.out.println(h1.isMoreGeneral(h2));
+    // }
 }
