@@ -4,13 +4,14 @@ import java.util.*;
 import java.io.*;
 
 class id3{
-    ArrayList<Attribute> attributes;
-    ArrayList<TrainingData> data;
+    ArrayList<Attribute> attributes = new ArrayList<Attribute>();
+    ArrayList<TrainingData> data = new ArrayList<TrainingData>();
     id3(){
         TrainingData[] examples;
         try{
-            examples = Reader.read("tempo.data");
+            examples = Reader.read("modifiedAdults.data");
         }catch(FileNotFoundException e){
+            System.out.println("file not found");
             examples = null;
         }
         setAttributes();
@@ -46,7 +47,11 @@ class id3{
             for (String val: TrainingData.getAcceptedValues(bestAttribute.index)){
                 ArrayList<TrainingData> new_examples = new ArrayList<TrainingData>();
                 for(TrainingData example: examples){
-                    if(example.attributes[bestAttribute.index].equalsIgnoreCase(val)){
+                    String currValue = example.attributes[bestAttribute.index];
+                    if(currValue == "?"){
+                        currValue = getMostCommonValue(examples, bestAttribute.index);
+                    }
+                    if(currValue.equalsIgnoreCase(val)){
                         new_examples.add(example);
                     }
                 }
@@ -64,8 +69,32 @@ class id3{
             return tree;
         }
     }
+    String getMostCommonValue(ArrayList<TrainingData> examples, int index){
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        String[] acceptedValues = TrainingData.getAcceptedValues(index);
+        for(String value: acceptedValues){
+            map.put(value, 0);
+        }
+        for(TrainingData example : examples){
+            String key = example.attributes[index];
+            if(key == "?"){
+                continue;
+            }
+            map.put(key, map.get(key) + 1); 
+        }
+        String maxKey = null;
+        int maxValue = 0;
+        for(Map.Entry<String,Integer> entry : map.entrySet()) {
+            if (maxKey == null || entry.getValue() > maxValue) {
+                maxKey = entry.getKey();
+                maxValue = entry.getValue();
+            }
+        }
+        return maxKey;
+    }
     public static void main(String[] args) {
         id3 id = new id3();
-        
+        DecisionTree dt = id.buildTree(id.data, id.attributes);
+        System.out.println(dt.root.splitAttribute.name);
     }
 }
