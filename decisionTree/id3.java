@@ -6,6 +6,7 @@ import java.io.*;
 class id3{
     ArrayList<Attribute> attributes = new ArrayList<Attribute>();
     ArrayList<TrainingData> data = new ArrayList<TrainingData>();
+    int count = 0;
     id3(){
         TrainingData[] examples;
         try{
@@ -18,6 +19,7 @@ class id3{
         for (TrainingData example: examples) {
             this.data.add(example);
         }
+        System.out.println(data.size());
     }
     void setAttributes(){
         Attribute attribute;
@@ -61,8 +63,13 @@ class id3{
                 if(!new_child.isleaf){
                     considerAttributes.remove(bestAttribute);
                     child_tree.addChild(buildTree(new_examples,considerAttributes));
+                    tree.addChild(child_tree);
                 }else{
-                    child_tree.root.setClassification();
+                    // child_tree.root.setClassification();
+                    if(new_child.classification.equalsIgnoreCase("<=50K")){
+                        System.out.println(new_child.classification);
+                        this.count++;
+                    }
                     tree.addChild(child_tree);
                 }
             }
@@ -95,6 +102,25 @@ class id3{
     public static void main(String[] args) {
         id3 id = new id3();
         DecisionTree dt = id.buildTree(id.data, id.attributes);
-        System.out.println(dt.root.splitAttribute.name);
+        System.out.println(id.count);
+        // System.out.println(dt.children.get(0).root.splitValue);
+        // TrainingData[] test = null;
+        // try{
+        //     test = Reader.read("modifiedAdults.data");
+        // }catch(FileNotFoundException e){
+        //     System.out.println("FileNotFoundException");
+        // }
+        // System.out.println("starting testing");
+        // int count = 0;
+        // System.out.println(test.length);
+        // for(TrainingData t : test){
+        //     String actualValue = t.attributes[t.attributes.length - 1];
+        //     System.out.println(actualValue + "," + dt.getClassification(dt,t));
+        //     // if(dt.getClassification(dt, t).equalsIgnoreCase(actualValue)){
+        //     //     System.out.println(dt.getClassification(dt,t) + " " + actualValue);
+        //     //     count++;
+        //     // }
+        // }
+        // System.out.println(count);
     }
 }

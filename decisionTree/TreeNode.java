@@ -44,7 +44,7 @@ class TreeNode{
         }
         else if(data.size() == 0){
             // Figure something better out
-            this.classification = ">50K";
+            this.classification = majorityClassification();
             return; 
         }
         else{

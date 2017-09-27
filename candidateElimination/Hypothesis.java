@@ -91,7 +91,6 @@ class Hypothesis{
         return false;
     }
 
-
     void printHypothesis(){
         System.out.print("<");
         for (int i = 0; i < this.attributes.length; i++ ) {

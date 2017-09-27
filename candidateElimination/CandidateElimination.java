@@ -22,29 +22,55 @@ class CandidateElimination{
         specificBoundary.add(mostSpecific);
     }
     void minifyGeneralBoundary(){
-        Hypothesis[] genBound = new Hypothesis[generalBoundary.size()];
-        genBound = generalBoundary.toArray(genBound);
-        for(int j = 0; j < genBound.length; j++){
-            Hypothesis hypo = genBound[j];
-            if(hypo == null){
-                continue;
-            }
-            for(int i = 0; i < genBound.length; i++){
-                if(genBound[i] == null){
-                    continue;
-                }
-                if(i == j){
-                    continue;
-                }else{
-                    if(genBound[i].isMoreGeneral(hypo)){
-                        // hypo.printHypothesis();
-                        // genBound[i].printHypothesis();
-                        genBound[i] = null;
-                        generalBoundary.remove(hypo);
-                    }
+        ArrayList <Hypothesis> remove = new ArrayList<> ();
+        for(int i = 0; i < generalBoundary.size(); i++){
+            for(int j = i+1; j < generalBoundary.size(); j++){
+                Hypothesis a = generalBoundary.get(i);
+                Hypothesis b = generalBoundary.get(j);
+                if (a.isMoreGeneral(b)){
+                    remove.add(b);
                 }
             }
         }
+        Iterator itr = remove.iterator();
+        while(itr.hasNext()){
+            Hypothesis h = (Hypothesis)itr.next();
+            generalBoundary.remove(h);
+        }
+        // int[] rand = {0, 9, 9,9,9,9,9,9,9,9,9,9,2,9,9,9};
+        // Hypothesis[] genBound = new Hypothesis[generalBoundary.size()];
+        // genBound = generalBoundary.toArray(genBound);
+        // for(int j = 0; j < genBound.length; j++){
+        //     Hypothesis hypo = genBound[j];
+        //     if(hypo == null){
+        //         continue;
+        //     }
+        //     for(int i = 0; i < genBound.length; i++){
+        //         if(genBound[i] == null){
+        //             continue;
+        //         }
+        //         if(i == j){
+        //             continue;
+        //         }else{
+        //             if(genBound[i].isMoreGeneral(hypo)){
+        //                 // hypo.printHypothesis();
+        //                 // genBound[i].printHypothesis();
+        //                 int flag = 0;
+        //                 genBound[i] = null;
+        //                 for(int z =0; z < hypo.attributes.length; i++){
+        //                     if(hypo.attributes[z] != rand[z]){
+        //                         flag = 1;
+        //                         break;
+        //                     }
+        //                 }
+        //                 if(flag == 0){
+        //                     hypo.printHypothesis();
+        //                 }
+        //                 generalBoundary.remove(hypo);
+        //             }
+        //         }
+        //     }
+        // }
         // for(int i = generalBoundary.size() - 1; i >= 0; i--){
         //     for(int j = 0; (j != i ) && (j < 1); j++){
         //         if(generalBoundary.get(j).isMoreGeneral(this.generalBoundary.get(i))){
@@ -217,7 +243,7 @@ class CandidateElimination{
         return;
     }
     public static void main(String[] args) {
-        CandidateElimination ce = new CandidateElimination(5);
+        CandidateElimination ce = new CandidateElimination(3);
         ce.candidateElimination();
     }
 }

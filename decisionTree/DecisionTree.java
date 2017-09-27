@@ -43,23 +43,30 @@ class DecisionTree{
         * Iniitial call should be tree.getClassification(tree,t)
         */
         String classification = null;
+        // System.out.println("here");
         if(tree.root.isleaf){
+            // System.out.println("it's leaf"+tree.root.classification);
             return tree.root.classification;
         }
         if(tree.root.splitAttribute == null){
+            // System.out.println("null "+tree.root.majorityClassification());
             return tree.root.majorityClassification();
         }
         else{
             int index = tree.root.splitAttribute.index;
             String value = t.attributes[index];
-            if(value.equalsIgnoreCase(tree.root.splitValue)){
-                for(DecisionTree child : tree.children){
+            for(DecisionTree child : tree.children){
+                if(value.equalsIgnoreCase(child.root.splitValue)){
+                    // System.out.println(index + " " + value + " " + child.root.splitValue);
                     if(child.root.data.get(0).attributes[index].equals(value)){
+                        // System.out.println(child.root.data.get(0).attributes[index]);
+                        // System.out.println(classification);
                         classification = getClassification(child, t);
                     }
-                }   
-            }
+                }
+            }   
         }
         return classification;
     }
+
 }
