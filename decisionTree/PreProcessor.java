@@ -106,6 +106,11 @@ class PreProcessor{
                 }
             }
         }
+        try{
+            writeToFile("modifiedTest.data");
+        }catch(IOException e){
+            System.out.println("file not found");
+        }
     }
     double getInformationGain(int index){
         double currEntropy = 0;
@@ -256,23 +261,12 @@ class PreProcessor{
     public static void main(String[] args) {
         TrainingData[] examples;
         try{
-            examples = Reader.read("tempo.data");
+            examples = Reader.read("test.data");
         }catch(FileNotFoundException e){
             examples = null;
         }
         PreProcessor pro = new PreProcessor(examples);
         // System.out.println(pro.getInformationGain(13));
-        double ig = 0;
-        double max = 0;
-        int maxi = 0;
-        for (int i = 0; i < pro.examples[0].attributes.length - 1; i++ ) {
-            ig = pro.getInformationGain(i);
-            if (ig > max) {
-                max = ig;
-                maxi = i;
-            }
-            System.out.println(i + " " + ig);
-        }
-        System.out.println(TrainingData.features.get(maxi)+":"+max);
+        pro.makeDiscrete();
     }
 }
