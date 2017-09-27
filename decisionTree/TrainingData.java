@@ -6,26 +6,6 @@ import java.lang.*;
 
 class TrainingData implements Comparable<TrainingData>{
     String[] attributes;
-    public static final Map<Integer, String> features;
-    static{
-        Map<Integer, String> map = new HashMap<Integer, String>();
-        map.put(0, "age");
-        map.put(1, "workclass");
-        map.put(2, "fnlwgt");
-        map.put(3, "education");
-        map.put(4, "education-num");
-        map.put(4, "marital-status");
-        map.put(6, "occupation");
-        map.put(7, "relationship");
-        map.put(8, "race");
-        map.put(9, "sex");
-        map.put(10, "capital-gain");
-        map.put(11, "capital-loss");
-        map.put(12, "hours-per-week");
-        map.put(13, "native-country");
-        features = Collections.unmodifiableMap(map);
-    }
-
     TrainingData(String[] attributes){
         this.attributes = attributes;
     }

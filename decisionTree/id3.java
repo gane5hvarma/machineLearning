@@ -111,7 +111,7 @@ class id3{
     public static void main(String[] args) {
         id3 id = new id3();
         DecisionTree dt = id.buildTree(id.data, id.attributes);
-        System.out.println(dt.children.get(0).root.splitValue);
+        // dt.printTree();
         TrainingData[] test = null;
         try{
             test = Reader.read("modifiedTest.data");
@@ -121,15 +121,16 @@ class id3{
         System.out.println("starting testing");
         double count = 0;
         System.out.println(test.length);
-        for(TrainingData t : test){
+        // for(TrainingData t : test){
+        TrainingData t = test[0];
             String actualValue = t.attributes[t.attributes.length - 1];
             String obtainedValue = dt.getClassification(dt,t);
-            obtainedValue = obtainedValue +".";
-            // System.out.println(actualValue + "," + dt.getClassification(dt,t));
+            obtainedValue = obtainedValue;
+            System.out.println(actualValue + "," + obtainedValue);
             if(obtainedValue.equalsIgnoreCase(actualValue)){
                 count++;
             }
-        }
-        System.out.println(count/test.length);
+        // }
+        System.out.println(count);
     }
 }

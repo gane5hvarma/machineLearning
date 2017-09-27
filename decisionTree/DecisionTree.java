@@ -45,19 +45,21 @@ class DecisionTree{
         String classification = null;
         // System.out.println("here");
         if(tree.root.isleaf){
-            // System.out.println("it's leaf"+tree.root.classification);
+            System.out.println("it's leaf"+tree.root.classification);
             return tree.root.classification;
         }
         if(tree.root.splitAttribute == null){
-            // System.out.println("null "+tree.root.majorityClassification());
-            return tree.root.majorityClassification();
+            System.out.println("It's a conditional Node");
+            classification = getClassification(tree.children.get(0), t);
         }
         else{
             int index = tree.root.splitAttribute.index;
             String value = t.attributes[index];
+            System.out.println("it's a treenode with SplitAttribute index:"+index +" and Value from t is:" + value +
+                " it has number of children:"+tree.children.size());
             for(DecisionTree child : tree.children){
                 if(value.equalsIgnoreCase(child.root.splitValue)){
-                    // System.out.println(index + " " + value + " " + child.root.splitValue);
+                    System.out.println("child's splitvalue is"+child.root.splitValue);
                     if(child.root.data.get(0).attributes[index].equals(value)){
                         // System.out.println(child.root.data.get(0).attributes[index]);
                         // System.out.println(classification);
