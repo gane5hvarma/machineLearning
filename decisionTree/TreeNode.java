@@ -57,14 +57,14 @@ class TreeNode{
         int posExamples = 0;
         int negExamples = 0;
         for(TrainingData t: this.data){
-            if(t.getValue().equalsIgnoreCase("<50K")){
+            if(t.getValue().equalsIgnoreCase("<=50K")){
                 posExamples++;
             }else{
                 negExamples++;
             }
         }
         if (posExamples > negExamples){
-            return "<50K";
+            return "<=50K";
         }else{
             return ">50K";
         }

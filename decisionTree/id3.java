@@ -6,7 +6,6 @@ import java.io.*;
 class id3{
     ArrayList<Attribute> attributes = new ArrayList<Attribute>();
     ArrayList<TrainingData> data = new ArrayList<TrainingData>();
-    int count = 0;
     id3(){
         TrainingData[] examples;
         try{
@@ -57,20 +56,30 @@ class id3{
                         new_examples.add(example);
                     }
                 }
-                TreeNode new_child = new TreeNode(new_examples);
-                new_child.setSplitValue(val);
-                DecisionTree child_tree = new DecisionTree(new_child);
-                if(!new_child.isleaf){
-                    considerAttributes.remove(bestAttribute);
-                    child_tree.addChild(buildTree(new_examples,considerAttributes));
-                    tree.addChild(child_tree);
-                }else{
-                    // child_tree.root.setClassification();
-                    if(new_child.classification.equalsIgnoreCase("<=50K")){
-                        System.out.println(new_child.classification);
-                        this.count++;
+                if (new_examples.size() == 0) {
+                    TreeNode final_leaf = new TreeNode(new_examples);
+                    DecisionTree final_child = new DecisionTree(final_leaf);
+                    final_child.root.isleaf = true;
+                    final_child.root.classification = node.majorityClassification();
+                    tree.addChild(final_child);
+                }
+                else{
+                    TreeNode new_child = new TreeNode(new_examples);
+                    new_child.setSplitValue(val);
+                    DecisionTree child_tree = new DecisionTree(new_child);
+                    if(!new_child.isleaf){
+                        considerAttributes.remove(bestAttribute);
+                        child_tree.addChild(buildTree(new_examples,considerAttributes));
+                        tree.addChild(child_tree);
+                    }else{
+                        // child_tree.root.setClassification();
+                        // if(new_child.classification.equalsIgnoreCase("<=50K")){
+                        //     System.out.println(new_child.classification);
+                        //     this.count++;
+                        // }
+                        // System.out.println(new_examples.size() + "," + considerAttributes.size()+","+ val);
+                        tree.addChild(child_tree);
                     }
-                    tree.addChild(child_tree);
                 }
             }
             return tree;
@@ -102,25 +111,25 @@ class id3{
     public static void main(String[] args) {
         id3 id = new id3();
         DecisionTree dt = id.buildTree(id.data, id.attributes);
-        System.out.println(id.count);
-        // System.out.println(dt.children.get(0).root.splitValue);
-        // TrainingData[] test = null;
-        // try{
-        //     test = Reader.read("modifiedAdults.data");
-        // }catch(FileNotFoundException e){
-        //     System.out.println("FileNotFoundException");
-        // }
-        // System.out.println("starting testing");
-        // int count = 0;
-        // System.out.println(test.length);
-        // for(TrainingData t : test){
-        //     String actualValue = t.attributes[t.attributes.length - 1];
-        //     System.out.println(actualValue + "," + dt.getClassification(dt,t));
-        //     // if(dt.getClassification(dt, t).equalsIgnoreCase(actualValue)){
-        //     //     System.out.println(dt.getClassification(dt,t) + " " + actualValue);
-        //     //     count++;
-        //     // }
-        // }
-        // System.out.println(count);
+        System.out.println(dt.children.get(0).root.splitValue);
+        TrainingData[] test = null;
+        try{
+            test = Reader.read("modifiedTest.data");
+        }catch(FileNotFoundException e){
+            System.out.println("FileNotFoundException");
+        }
+        System.out.println("starting testing");
+        double count = 0;
+        System.out.println(test.length);
+        for(TrainingData t : test){
+            String actualValue = t.attributes[t.attributes.length - 1];
+            String obtainedValue = dt.getClassification(dt,t);
+            obtainedValue = obtainedValue +".";
+            // System.out.println(actualValue + "," + dt.getClassification(dt,t));
+            if(obtainedValue.equalsIgnoreCase(actualValue)){
+                count++;
+            }
+        }
+        System.out.println(count/test.length);
     }
 }
