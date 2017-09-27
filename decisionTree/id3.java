@@ -60,6 +60,7 @@ class id3{
                     TreeNode final_leaf = new TreeNode(new_examples);
                     DecisionTree final_child = new DecisionTree(final_leaf);
                     final_child.root.isleaf = true;
+                    final_child.root.splitValue = val;
                     final_child.root.classification = node.majorityClassification();
                     tree.addChild(final_child);
                 }
@@ -85,7 +86,7 @@ class id3{
             return tree;
         }
     }
-    String getMostCommonValue(ArrayList<TrainingData> examples, int index){
+    static String getMostCommonValue(ArrayList<TrainingData> examples, int index){
         Map<String, Integer> map = new HashMap<String, Integer>();
         String[] acceptedValues = TrainingData.getAcceptedValues(index);
         for(String value: acceptedValues){
@@ -93,7 +94,7 @@ class id3{
         }
         for(TrainingData example : examples){
             String key = example.attributes[index];
-            if(key == "?"){
+            if(key.equals("?")){
                 continue;
             }
             map.put(key, map.get(key) + 1); 
@@ -121,16 +122,20 @@ class id3{
         System.out.println("starting testing");
         double count = 0;
         System.out.println(test.length);
-        // for(TrainingData t : test){
-        TrainingData t = test[0];
+        for(int i = 0; i < test.length; i++){
+            TrainingData t = test[i];
             String actualValue = t.attributes[t.attributes.length - 1];
             String obtainedValue = dt.getClassification(dt,t);
-            obtainedValue = obtainedValue;
-            System.out.println(actualValue + "," + obtainedValue);
+            obtainedValue = obtainedValue + ".";
+            // System.out.println(actualValue + " " + obtainedValue);
+            if(obtainedValue == null){
+                System.out.println(i);
+                continue;
+            }
             if(obtainedValue.equalsIgnoreCase(actualValue)){
                 count++;
             }
-        // }
-        System.out.println(count);
+        }
+        System.out.println(count/test.length);
     }
 }

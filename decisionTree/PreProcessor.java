@@ -92,8 +92,10 @@ class PreProcessor{
             this.thresholds[i] = threshold;
         }
     }
-    void makeDiscrete(){
-        fillThresholds();
+    void makeDiscrete(boolean a){
+        if(a){
+            fillThresholds();
+        }
         for (TrainingData example: this.examples) {
             for(int j = 0; j < this.thresholds.length; j++){
                 int index = this.continuousValues[j];
@@ -259,14 +261,15 @@ class PreProcessor{
         out.close();
     }
     public static void main(String[] args) {
-        TrainingData[] examples;
-        try{
-            examples = Reader.read("test.data");
-        }catch(FileNotFoundException e){
-            examples = null;
-        }
+       TrainingData[] examples;
+       try{
+           examples = Reader.read("test.data");
+       }catch(FileNotFoundException e){
+           examples = null;
+       }
         PreProcessor pro = new PreProcessor(examples);
-        // System.out.println(pro.getInformationGain(13));
-        pro.makeDiscrete();
+        double[] thresholds = {27.0, 209912.0, 12.0, 7073.5, 1820.5, 41.0};
+        pro.thresholds = thresholds;
+        pro.makeDiscrete(false);
     }
 }
