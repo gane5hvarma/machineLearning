@@ -8,6 +8,9 @@ class DecisionTree{
     DecisionTree(TreeNode root){
         this.root = root;
     }
+    DecisionTree(DecisionTree dt){
+        this.root = dt.root;
+    }
     void addChild(DecisionTree child){
         this.children.add(child);
     }

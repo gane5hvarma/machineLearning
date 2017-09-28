@@ -79,8 +79,18 @@ class id3{
             return tree;
         }
     }
-    DecisionTree pruneTree(DecisionTree dt, TrainingData[] validationSet, double accuracy){
-        return null;
+    DecisionTree pruneTree(DecisionTree dt, TrainingData[] validationSet,
+     double accuracy, int number){
+        if(number >= 10){
+            return dt;
+        }
+        for (DecisionTree child : dt.children) {
+            if(child.root.isleaf){
+                child.root.prune();
+                double new_accuracy = getAccuracy(child, validationSet);
+            }
+        }
+        return dt;
     }
     static String getMostCommonValue(ArrayList<TrainingData> examples, int index){
         Map<String, Integer> map = new HashMap<String, Integer>();
@@ -128,7 +138,15 @@ class id3{
             System.out.println("FileNotFoundException");
         }
         System.out.println("starting testing");
-        dt.root.prune();
+        for (int j = 0; j < dt.children.size(); j++) {
+            DecisionTree new_dt = new DecisionTree(dt);
+            for(DecisionTree child: dt.children){
+                new_dt.addChild(child);
+            }
+            new_dt.children.set(j, new DecisionTree(dt.children.get(j))); 
+            new_dt.children.get(j).root.prune();
+            System.out.println(id.getAccuracy(new_dt, test));
+        }
         System.out.println(id.getAccuracy(dt, test));
     }
 }
