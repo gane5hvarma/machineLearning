@@ -18,7 +18,6 @@ class id3{
         for (TrainingData example: examples) {
             this.data.add(example);
         }
-        System.out.println(data.size());
     }
     void setAttributes(){
         Attribute attribute;
@@ -73,18 +72,15 @@ class id3{
                         child_tree.addChild(buildTree(new_examples,considerAttributes));
                         tree.addChild(child_tree);
                     }else{
-                        // child_tree.root.setClassification();
-                        // if(new_child.classification.equalsIgnoreCase("<=50K")){
-                        //     System.out.println(new_child.classification);
-                        //     this.count++;
-                        // }
-                        // System.out.println(new_examples.size() + "," + considerAttributes.size()+","+ val);
                         tree.addChild(child_tree);
                     }
                 }
             }
             return tree;
         }
+    }
+    DecisionTree pruneTree(DecisionTree dt, TrainingData[] validationSet, double accuracy){
+        return null;
     }
     static String getMostCommonValue(ArrayList<TrainingData> examples, int index){
         Map<String, Integer> map = new HashMap<String, Integer>();
@@ -109,6 +105,18 @@ class id3{
         }
         return maxKey;
     }
+    double getAccuracy(DecisionTree dt, TrainingData[] examples){
+        double count = 0;
+        for(TrainingData t : examples){
+            String actualValue = t.attributes[t.attributes.length - 1];
+            String obtainedValue = dt.getClassification(dt,t);
+            obtainedValue = obtainedValue + ".";
+            if(actualValue.equals(obtainedValue)){
+                count++;
+            }
+        }
+        return count/examples.length;
+    }
     public static void main(String[] args) {
         id3 id = new id3();
         DecisionTree dt = id.buildTree(id.data, id.attributes);
@@ -120,22 +128,7 @@ class id3{
             System.out.println("FileNotFoundException");
         }
         System.out.println("starting testing");
-        double count = 0;
-        System.out.println(test.length);
-        for(int i = 0; i < test.length; i++){
-            TrainingData t = test[i];
-            String actualValue = t.attributes[t.attributes.length - 1];
-            String obtainedValue = dt.getClassification(dt,t);
-            obtainedValue = obtainedValue + ".";
-            // System.out.println(actualValue + " " + obtainedValue);
-            if(obtainedValue == null){
-                System.out.println(i);
-                continue;
-            }
-            if(obtainedValue.equalsIgnoreCase(actualValue)){
-                count++;
-            }
-        }
-        System.out.println(count/test.length);
+        dt.root.prune();
+        System.out.println(id.getAccuracy(dt, test));
     }
 }
