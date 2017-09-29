@@ -28,7 +28,7 @@ class id3{
         }
     }
     DecisionTree buildTree(ArrayList<TrainingData> examples,
-                            ArrayList<Attribute> attributes){
+                            ArrayList<Attribute> attributes, int level){
         this.id++;
         ArrayList<Attribute> considerAttributes = new ArrayList<Attribute>();
         for(Attribute attribute : attributes){
@@ -37,6 +37,7 @@ class id3{
         TreeNode node = new TreeNode(examples);
         DecisionTree tree = new DecisionTree(node);
         tree.id = this.id;
+        tree.level = level++;
         if(node.isleaf){
             return tree;
         }else if(considerAttributes.size() == 0){
@@ -61,6 +62,7 @@ class id3{
                 if (new_examples.size() == 0) {
                     TreeNode final_leaf = new TreeNode(new_examples);
                     DecisionTree final_child = new DecisionTree(final_leaf);
+                    final_child.level = level;
                     final_child.id = this.id++;
                     final_child.root.isleaf = true;
                     final_child.root.splitValue = val;
@@ -71,10 +73,11 @@ class id3{
                     TreeNode new_child = new TreeNode(new_examples);
                     new_child.setSplitValue(val);
                     DecisionTree child_tree = new DecisionTree(new_child);
+                    child_tree.level = level;
                     child_tree.id = this.id++;
                     if(!new_child.isleaf){
                         considerAttributes.remove(bestAttribute);
-                        child_tree.addChild(buildTree(new_examples,considerAttributes));
+                        child_tree.addChild(buildTree(new_examples,considerAttributes,level+1));
                         tree.addChild(child_tree);
                     }else{
                         tree.addChild(child_tree);
@@ -121,10 +124,11 @@ class id3{
     }
     public static void main(String[] args) {
         id3 id = new id3();
-        DecisionTree dt = id.buildTree(id.data, id.attributes);
-        System.out.println(dt.children.get(0).children.get(0).id);
-        System.out.println(dt.children.get(1).children.get(0).id);
-        System.out.println(dt.children.get(2).children.get(0).id);
+        DecisionTree dt = id.buildTree(id.data, id.attributes , 0);
+        System.out.println(dt.level);
+        System.out.println(dt.children.get(0).children.get(0).level);
+        System.out.println(dt.children.get(1).children.get(0).level);
+        System.out.println(dt.children.get(2).children.get(0).level);
         TrainingData[] test = null;
         try{
             test = Reader.read("modifiedTest.data");
