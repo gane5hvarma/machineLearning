@@ -25,6 +25,12 @@ class DecisionTree{
     void addChild(DecisionTree child){
         this.children.add(child);
     }
+    void prune(){
+        this.root.isleaf = true;
+        this.root.classification = this.root.majorityClassification();
+        this.root.delete = false;
+        this.children.clear();
+    }
     int totalNumberofNodes(){
         int numberOfNodes = 0;
         for (DecisionTree tree : this.children) {

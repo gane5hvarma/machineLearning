@@ -110,7 +110,7 @@ class id3{
         }
         return maxKey;
     }
-    double getAccuracy(DecisionTree dt, TrainingData[] examples){
+    static double getAccuracy(DecisionTree dt, TrainingData[] examples){
         double count = 0;
         for(TrainingData t : examples){
             String actualValue = t.attributes[t.attributes.length - 1];
@@ -131,41 +131,8 @@ class id3{
             System.out.println("FileNotFoundException");
         }
         DecisionTree dt = id.buildTree(id.data, id.attributes , 0);
-        System.out.println(id.getAccuracy(dt, test));
-        ArrayList<Integer> ids = new ArrayList<Integer>();
-        dt.getElementIds(dt, 1, ids);
-        for(int i: ids){
-            DecisionTree new_dt = new DecisionTree(dt);
-            DecisionTree child = new_dt.getElementById(new_dt, i);
-            child.root.prune();
-            System.out.println(id.getAccuracy(new_dt, test));
-        }
-        // DecisionTree new_dt2 = new DecisionTree(dt);
-        // ArrayList<DecisionTree> trees = new ArrayList<DecisionTree>();
-        // new_dt.getElements(new_dt2, 1, trees);
-        // System.out.println(trees.size());
-        // for(DecisionTree tree: trees){
-            
-        // }
-        // System.out.println(dt.levels.size());
-        // TrainingData[] test = null;
-        // try{
-        //     test = Reader.read("modifiedTest.data");
-        // }catch(FileNotFoundException e){
-        //     System.out.println("FileNotFoundException");
-        // }
-        // System.out.println("starting testing");
-        // for (int j = 0; j < dt.children.size(); j++) {
-        //     DecisionTree new_dt = new DecisionTree(dt);
-        //     new_dt.children.get(j).root.prune();
-        //     System.out.println(id.getAccuracy(new_dt, test));
-        // }
-        // DecisionTree new_dt;
-        // for(int j = 0; j < dt.children.size();j++){
-        //     new_dt = new DecisionTree(dt);
-        //     new_dt.children.get(j).root.prune();
-        //     System.out.println(id.getAccuracy(new_dt, test));
-        // }       
-        // System.out.println(id.getAccuracy(dt, test));
+        double accuracy = id.getAccuracy(dt, test);
+        Prune pruner = new Prune(dt, accuracy, test);
+        DecisionTree prunedTree = pruner.prune();
     }
 }

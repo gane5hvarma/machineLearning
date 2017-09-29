@@ -76,9 +76,4 @@ class TreeNode{
             return ">50K";
         }
     }
-    void prune(){
-        this.isleaf = true;
-        this.classification = majorityClassification();
-        this.delete = false;
-    }
 }
