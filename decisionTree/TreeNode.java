@@ -27,19 +27,10 @@ class TreeNode{
     }
     TreeNode(TreeNode treeNode){
         this.data = treeNode.data;
-        setClassification();
-        if(this.data.size() == 0){
-            this.isleaf = true;
-            return;
-        }else{
-            String value = this.data.get(0).getValue();
-            for(TrainingData t: this.data){
-                if(!value.equalsIgnoreCase(t.getValue())){
-                    this.isleaf= false;
-                    return;
-                }
-            }
-        }
+        this.isleaf = treeNode.isleaf;
+        this.classification = treeNode.classification;
+        this.splitAttribute = treeNode.splitAttribute;
+        this.splitValue = treeNode.splitValue;
     }
     void setSplitAttribute(Attribute splitAttribute){
         this.splitAttribute = splitAttribute;

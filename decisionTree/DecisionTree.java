@@ -9,7 +9,12 @@ class DecisionTree{
         this.root = root;
     }
     DecisionTree(DecisionTree dt){
-        this.root = dt.root;
+        this.root = new TreeNode(dt.root);
+        for(DecisionTree child: dt.children){
+            this.children.add(new DecisionTree(child));
+        }
+    }
+    DecisionTree(){
     }
     void addChild(DecisionTree child){
         this.children.add(child);
@@ -83,5 +88,4 @@ class DecisionTree{
         }
         return classification;
     }
-
 }

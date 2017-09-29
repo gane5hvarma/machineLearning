@@ -79,19 +79,6 @@ class id3{
             return tree;
         }
     }
-    DecisionTree pruneTree(DecisionTree dt, TrainingData[] validationSet,
-     double accuracy, int number){
-        if(number >= 10){
-            return dt;
-        }
-        for (DecisionTree child : dt.children) {
-            if(child.root.isleaf){
-                child.root.prune();
-                double new_accuracy = getAccuracy(child, validationSet);
-            }
-        }
-        return dt;
-    }
     static String getMostCommonValue(ArrayList<TrainingData> examples, int index){
         Map<String, Integer> map = new HashMap<String, Integer>();
         String[] acceptedValues = TrainingData.getAcceptedValues(index);
@@ -130,7 +117,6 @@ class id3{
     public static void main(String[] args) {
         id3 id = new id3();
         DecisionTree dt = id.buildTree(id.data, id.attributes);
-        // dt.printTree();
         TrainingData[] test = null;
         try{
             test = Reader.read("modifiedTest.data");
@@ -138,15 +124,14 @@ class id3{
             System.out.println("FileNotFoundException");
         }
         System.out.println("starting testing");
-        for (int j = 0; j < dt.children.size(); j++) {
-            DecisionTree new_dt = new DecisionTree(dt);
-            for(DecisionTree child: dt.children){
-                new_dt.addChild(child);
-            }
-            new_dt.children.set(j, new DecisionTree(dt.children.get(j))); 
-            new_dt.children.get(j).root.prune();
-            System.out.println(id.getAccuracy(new_dt, test));
-        }
+        // for (int j = 0; j < dt.children.size(); j++) {
+        //     DecisionTree new_dt = new DecisionTree(dt);
+        //     new_dt.children.get(j).root.prune();
+        //     System.out.println(id.getAccuracy(new_dt, test));
+        // }
+        DecisionTree new_dt = new DecisionTree(dt);
+        new_dt.root.prune();
+        System.out.println(id.getAccuracy(new_dt, test));        
         System.out.println(id.getAccuracy(dt, test));
     }
 }
