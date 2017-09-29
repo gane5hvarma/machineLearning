@@ -66,17 +66,15 @@ class DecisionTree{
             return Collections.max(levels);
         }
     }
-    void getElements(DecisionTree dt, int level){
+    void getElements(DecisionTree dt, int level, 
+        ArrayList<DecisionTree> trees){
         if(dt.level == level){
-            System.out.println(dt.root.splitValue);
-            if(dt.root.splitAttribute != null){
-                System.out.println(dt.root.splitAttribute.name);
-            }
+            trees.add(dt);
         }else if(dt.level > level){
             return;
         }else{
             for(DecisionTree child: dt.children){
-                getElements(child, level);
+                getElements(child, level, trees);
             }
         }
     }

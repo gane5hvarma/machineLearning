@@ -124,9 +124,24 @@ class id3{
     }
     public static void main(String[] args) {
         id3 id = new id3();
+        TrainingData[] test = null;
+        try{
+            test = Reader.read("modifiedTest.data");
+        }catch(FileNotFoundException e){
+            System.out.println("FileNotFoundException");
+        }
         DecisionTree dt = id.buildTree(id.data, id.attributes , 0);
-        System.out.println(dt.maxLevel(dt));
-        dt.getElements(dt,27);
+        System.out.print(id.getAccuracy(dt, test));
+        DecisionTree new_dt = new DecisionTree(dt);
+        DecisionTree new_dt2 = new DecisionTree(dt);
+        ArrayList<DecisionTree> trees = new ArrayList<DecisionTree>();
+        new_dt.getElements(new_dt2, 1, trees);
+        System.out.println(trees.size());
+        for(DecisionTree tree: trees){
+            tree.root.prune();
+            System.out.println(id.getAccuracy(new_dt2, test));
+            new_dt2 = new_dt;
+        }
         // System.out.println(dt.levels.size());
         // TrainingData[] test = null;
         // try{
