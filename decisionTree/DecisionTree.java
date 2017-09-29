@@ -4,6 +4,8 @@ import java.util.*;
 
 class DecisionTree{
     TreeNode root;
+    int id = 0;
+    int level = 0;
     ArrayList<DecisionTree> children = new ArrayList<DecisionTree>();
     DecisionTree(TreeNode root){
         this.root = root;
@@ -13,6 +15,8 @@ class DecisionTree{
         for(DecisionTree child: dt.children){
             this.children.add(new DecisionTree(child));
         }
+        this.id = dt.id;
+        this.level = dt.level;
     }
     DecisionTree(){
     }
