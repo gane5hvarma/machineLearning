@@ -66,17 +66,32 @@ class DecisionTree{
             return Collections.max(levels);
         }
     }
-    void getElements(DecisionTree dt, int level, 
-        ArrayList<DecisionTree> trees){
+    void getElementIds(DecisionTree dt, int level, ArrayList<Integer> ids){
         if(dt.level == level){
-            trees.add(dt);
+            ids.add(dt.id);
         }else if(dt.level > level){
             return;
         }else{
             for(DecisionTree child: dt.children){
-                getElements(child, level, trees);
+                getElementIds(child, level, ids);
             }
         }
+    }
+    DecisionTree getElementById(DecisionTree dt, int id){
+        DecisionTree req = null;
+        if(dt.id == id){
+            req = dt;
+        }
+        if((dt.root.isleaf || dt.root.data.size() == 0) && dt.id != id){
+            req = null;
+        }
+        for(DecisionTree child : dt.children){
+            DecisionTree temp = getElementById(child ,id);
+            if(temp != null){
+                req = temp;
+            }
+        }
+        return req;
     }
     String getClassification(DecisionTree tree, TrainingData t){
         /*

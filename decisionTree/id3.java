@@ -36,7 +36,7 @@ class id3{
         }
         TreeNode node = new TreeNode(examples);
         DecisionTree tree = new DecisionTree(node);
-        tree.id = this.id;
+        tree.id = this.id++;
         tree.level = level++;
         if(node.isleaf){
             return tree;
@@ -131,17 +131,22 @@ class id3{
             System.out.println("FileNotFoundException");
         }
         DecisionTree dt = id.buildTree(id.data, id.attributes , 0);
-        System.out.print(id.getAccuracy(dt, test));
-        DecisionTree new_dt = new DecisionTree(dt);
-        DecisionTree new_dt2 = new DecisionTree(dt);
-        ArrayList<DecisionTree> trees = new ArrayList<DecisionTree>();
-        new_dt.getElements(new_dt2, 1, trees);
-        System.out.println(trees.size());
-        for(DecisionTree tree: trees){
-            tree.root.prune();
-            System.out.println(id.getAccuracy(new_dt2, test));
-            new_dt2 = new_dt;
+        System.out.println(id.getAccuracy(dt, test));
+        ArrayList<Integer> ids = new ArrayList<Integer>();
+        dt.getElementIds(dt, 1, ids);
+        for(int i: ids){
+            DecisionTree new_dt = new DecisionTree(dt);
+            DecisionTree child = new_dt.getElementById(new_dt, i);
+            child.root.prune();
+            System.out.println(id.getAccuracy(new_dt, test));
         }
+        // DecisionTree new_dt2 = new DecisionTree(dt);
+        // ArrayList<DecisionTree> trees = new ArrayList<DecisionTree>();
+        // new_dt.getElements(new_dt2, 1, trees);
+        // System.out.println(trees.size());
+        // for(DecisionTree tree: trees){
+            
+        // }
         // System.out.println(dt.levels.size());
         // TrainingData[] test = null;
         // try{
