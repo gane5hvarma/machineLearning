@@ -126,6 +126,7 @@ class id3{
         id3 id = new id3();
         DecisionTree dt = id.buildTree(id.data, id.attributes , 0);
         System.out.println(dt.maxLevel(dt));
+        dt.getElements(dt,27);
         // System.out.println(dt.levels.size());
         // TrainingData[] test = null;
         // try{

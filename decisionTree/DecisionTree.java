@@ -66,6 +66,20 @@ class DecisionTree{
             return Collections.max(levels);
         }
     }
+    void getElements(DecisionTree dt, int level){
+        if(dt.level == level){
+            System.out.println(dt.root.splitValue);
+            if(dt.root.splitAttribute != null){
+                System.out.println(dt.root.splitAttribute.name);
+            }
+        }else if(dt.level > level){
+            return;
+        }else{
+            for(DecisionTree child: dt.children){
+                getElements(child, level);
+            }
+        }
+    }
     String getClassification(DecisionTree tree, TrainingData t){
         /*
         * Given a training example t, find out how the tree classifies the 
