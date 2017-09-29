@@ -6,8 +6,18 @@ import java.util.*;
 
 
 class Reader{
+    /*
+    * An utility class to read data from specified by fileName and perform one
+    * vs all strategy.
+    */
     public static ArrayList<TrainingData> read(String filename, int type) throws 
     FileNotFoundException {
+        /*
+        * Reads data from filename, considers each line as a trainingExample and 
+        * splits the values at "," with each value considered as an attribute.
+        * Performs one vs all by setting classification zero for all TrainingData
+        * whose classification != type and sets 1 otherwise
+        */
         ArrayList<TrainingData> training = new ArrayList<TrainingData>();
         Scanner in = new Scanner(new FileReader(filename));
         while(in.hasNext()){

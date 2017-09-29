@@ -5,14 +5,20 @@ import java.io.*;
 import java.util.Arrays;
 
 class CandidateElimination{
+    /*
+    * Actual Class that performs Candidate Elimination. It's attributes are self
+    * explanatory. 
+    * mostGeneral is the mostGeneral Hypothesis, containing ALL for all of its
+    * attributes
+    * mostSpecific is the mostSpecifc Hypothesis, contiaing NONE for all of its
+    * attributes.
+    */
     Hypothesis mostGeneral = new Hypothesis(Hypothesis.GENERAL);
     Hypothesis mostSpecific = new Hypothesis(Hypothesis.SPECIFIC);
     ArrayList<Hypothesis> generalBoundary = new ArrayList<Hypothesis>();
     ArrayList<Hypothesis> specificBoundary = new ArrayList<Hypothesis>();
     ArrayList<TrainingData> trainingData;
     CandidateElimination(int i){
-        // We have to do the number of times there are number of types.
-        // Just put it in a for loop
         try {
             trainingData = Reader.read("zoo.data", i);
         } catch(FileNotFoundException e){
@@ -32,57 +38,9 @@ class CandidateElimination{
                 }
             }
         }
-        Iterator itr = remove.iterator();
-        while(itr.hasNext()){
-            Hypothesis h = (Hypothesis)itr.next();
+        for(Hypothesis h: remove){
             generalBoundary.remove(h);
         }
-        // int[] rand = {0, 9, 9,9,9,9,9,9,9,9,9,9,2,9,9,9};
-        // Hypothesis[] genBound = new Hypothesis[generalBoundary.size()];
-        // genBound = generalBoundary.toArray(genBound);
-        // for(int j = 0; j < genBound.length; j++){
-        //     Hypothesis hypo = genBound[j];
-        //     if(hypo == null){
-        //         continue;
-        //     }
-        //     for(int i = 0; i < genBound.length; i++){
-        //         if(genBound[i] == null){
-        //             continue;
-        //         }
-        //         if(i == j){
-        //             continue;
-        //         }else{
-        //             if(genBound[i].isMoreGeneral(hypo)){
-        //                 // hypo.printHypothesis();
-        //                 // genBound[i].printHypothesis();
-        //                 int flag = 0;
-        //                 genBound[i] = null;
-        //                 for(int z =0; z < hypo.attributes.length; i++){
-        //                     if(hypo.attributes[z] != rand[z]){
-        //                         flag = 1;
-        //                         break;
-        //                     }
-        //                 }
-        //                 if(flag == 0){
-        //                     hypo.printHypothesis();
-        //                 }
-        //                 generalBoundary.remove(hypo);
-        //             }
-        //         }
-        //     }
-        // }
-        // for(int i = generalBoundary.size() - 1; i >= 0; i--){
-        //     for(int j = 0; (j != i ) && (j < 1); j++){
-        //         if(generalBoundary.get(j).isMoreGeneral(this.generalBoundary.get(i))){
-        //             for(int k = i; k < generalBoundary.size() - 1; k++){
-        //                 generalBoundary.set(k, generalBoundary.get(k+1));
-        //             }
-        //             System.out.println("removing");
-        //             generalBoundary.remove(generalBoundary.size() -1);
-        //             break;
-        //         }
-        //     }
-        // }
     }
     boolean acceptableSpecialization(Hypothesis h){
         for (Hypothesis s: specificBoundary ) {

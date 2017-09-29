@@ -30,6 +30,10 @@ class Hypothesis{
         return accept;
     }
     boolean isEqual(int attr1, int attr2){
+        /*
+        * Returns if attr1 can be considered as equal with attr2 while 
+        * calculatig consistency.
+        */
         if((attr1 == NONE && attr2 != NONE)||(attr2 == NONE && attr1 !=NONE)){
             return false;
         }
@@ -46,7 +50,13 @@ class Hypothesis{
     boolean isConsistent(TrainingData t){
         /*
         * here t is the training data and we are checking if current hyopthesis
-        * is consistent with training data.
+        * is consistent with training data. For the hypothesis to be consistent
+        * there are two cases.
+        * Case 1 : Training Data t is a negative example. Then, there should be
+        * at least one attribute in hypothesis that is NOT EQUAL to the attr in
+        * training data.
+        * Case 2 : Training Data t is a positive example. Then, ALL the attrs in
+        * hypothesis should be equal to the attrs in t.
         */
         int count = 0;
         for(int i = 0; i < this.attributes.length; i++){
@@ -66,7 +76,8 @@ class Hypothesis{
         /*
         * Check if attr1 is more general than attr2. More general means:
         * if attr2 is null | attr1 == attr2 | attr1 == ALL, attr1 is more
-        * general
+        * general We use this when we are checking to see if an hypothesis is
+        * more general than another hypothesis.
         */
         if( attr1 == attr2 || attr2 == NONE || attr1 == ALL){
             return true;
@@ -76,8 +87,9 @@ class Hypothesis{
     boolean isMoreGeneral(Hypothesis h){
         /*
         * Check if the current hypothesis is more general than hypothesis 'h'.
-        * if in course of time it is found that we need a function to compare 
-        * two different hypothesis, make this a static method with two arguments
+        * For one hypothesis to be more  general than another hypothesis, all of
+        * its attributes should be more general than attributes of the other
+        * hypothesis.
         */
         int posCount = 0;
         for(int i = 0; i < this.attributes.length; i++){
@@ -92,6 +104,9 @@ class Hypothesis{
     }
 
     void printHypothesis(){
+        /*
+        * An utility function to pring the hypothesis
+        */
         System.out.print("<");
         for (int i = 0; i < this.attributes.length; i++ ) {
             System.out.print(this.attributes[i] +", ");
