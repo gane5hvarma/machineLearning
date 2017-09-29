@@ -125,17 +125,15 @@ class id3{
     public static void main(String[] args) {
         id3 id = new id3();
         DecisionTree dt = id.buildTree(id.data, id.attributes , 0);
-        System.out.println(dt.level);
-        System.out.println(dt.children.get(0).children.get(0).level);
-        System.out.println(dt.children.get(1).children.get(0).level);
-        System.out.println(dt.children.get(2).children.get(0).level);
-        TrainingData[] test = null;
-        try{
-            test = Reader.read("modifiedTest.data");
-        }catch(FileNotFoundException e){
-            System.out.println("FileNotFoundException");
-        }
-        System.out.println("starting testing");
+        System.out.println(dt.maxLevel(dt));
+        // System.out.println(dt.levels.size());
+        // TrainingData[] test = null;
+        // try{
+        //     test = Reader.read("modifiedTest.data");
+        // }catch(FileNotFoundException e){
+        //     System.out.println("FileNotFoundException");
+        // }
+        // System.out.println("starting testing");
         // for (int j = 0; j < dt.children.size(); j++) {
         //     DecisionTree new_dt = new DecisionTree(dt);
         //     new_dt.children.get(j).root.prune();

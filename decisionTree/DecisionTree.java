@@ -1,11 +1,13 @@
 package decision_tree;
 
 import java.util.*;
+import java.util.Collections;
 
 class DecisionTree{
     TreeNode root;
     int id = 0;
     int level = 0;
+    // ArrayList<Integer> levels = new ArrayList<Integer>();
     ArrayList<DecisionTree> children = new ArrayList<DecisionTree>();
     DecisionTree(TreeNode root){
         this.root = root;
@@ -38,12 +40,30 @@ class DecisionTree{
         if(root.isleaf){
             System.out.println("leaf node: " + root.classification);
         }else if(root.splitAttribute == null){
-            System.out.println("leaf node: " + root.classification);
+            System.out.println("conditional node: " + root.classification);
+            for (DecisionTree child : this.children) {
+                child.printTree();
+            }
         }else{
             System.out.println("TreeNode: " + root.splitAttribute.name);
             for (DecisionTree child : this.children) {
                 child.printTree();
             }
+        }
+    }
+    int maxLevel(DecisionTree dt){
+        if(dt.root.isleaf){
+            return dt.level;
+        }else if(dt.children.size() == 0){
+            return dt.level;
+        }
+        else{
+            ArrayList<Integer> levels = new ArrayList<Integer>();
+            for(DecisionTree child: dt.children){
+                int level = maxLevel(child);
+                levels.add(level);
+            }
+            return Collections.max(levels);
         }
     }
     String getClassification(DecisionTree tree, TrainingData t){
