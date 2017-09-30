@@ -4,29 +4,35 @@ import java.util.*;
 import java.lang.Math;
 
 class RandomForest{
-    DecisionTree[] randomForest = new DecisionTree[10];
+    DecisionTree[] randomForest = new DecisionTree[60];
     id3 runner = new id3();
     void buildRandomForest(){
-        for(int i = 0; i < 10; i++){
+        for(int i = 0; i < 60; i++){
             ArrayList<TrainingData> trainingData = getTrainingData();
             randomForest[i] = buildTree(trainingData, runner.attributes);
         }
     }
     ArrayList<TrainingData> getTrainingData(){
         ArrayList<TrainingData> data = new ArrayList<TrainingData>();
-        for(int i = 0; i < 35561; i++){
-            int rand = (int)(Math.random() * 35561);
+        for(int i = 0; i < 32561; i++){
+            int rand = (int)(Math.random() * 32561);
             data.add(runner.data.get(rand));
         }
         return data;
     }
     ArrayList<Attribute> getAttributes(ArrayList<Attribute> oldAttrs){
         ArrayList<Attribute> newAttrs = new ArrayList<Attribute>();
-        for(int i = 0; i < 4; i ++){
-            int rand = (int)(Math.random() * oldAttrs.size());
+        int len;
+        if(oldAttrs.size() <= 4){
+            len = oldAttrs.size();
+        }else{
+            len = 4;
+        }
+        for(int i = 0; i < len; i ++){
+            int rand = (int)(Math.random() * len);
             newAttrs.add(oldAttrs.get(rand));
         }
-        return oldAttrs;
+        return newAttrs;
     }
     DecisionTree buildTree(ArrayList<TrainingData> examples, 
                            ArrayList<Attribute> attrs){
@@ -35,7 +41,7 @@ class RandomForest{
         DecisionTree tree = new DecisionTree(node);
         if(node.isleaf){
             return tree;
-        }else if(considerAttributes.size() == 0){
+        }else if(considerAttributes.size() == 0 || stopTreeBuilding(attrs)){
             tree.root.classification = node.majorityClassification();
             return tree;
         }
@@ -47,7 +53,7 @@ class RandomForest{
             int index = bestAttr.index;
             for(String val : TrainingData.getAcceptedValues(index)){
                 ArrayList<TrainingData> nExamples = new ArrayList<TrainingData>();
-                for(TrainingData example : nExamples){
+                for(TrainingData example : examples){
                     String currValue = example.attributes[index];
                     if(currValue == "?"){
                         currValue = id3.getMostCommonValue(examples, index);
@@ -83,7 +89,7 @@ class RandomForest{
         int posExample = 0;
         int negExample = 0;
         String classification = null;
-        for(int i = 0; i < 10; i ++){
+        for(int i = 0; i < 60; i ++){
             classification = randomForest[i].getClassification(randomForest[i], t);
             if(classification.equalsIgnoreCase("<=50K")){
                 posExample++;
@@ -100,6 +106,15 @@ class RandomForest{
             return ">50K.";
         }
     }
+    boolean stopTreeBuilding(ArrayList<Attribute> attrs){
+        Attribute attr1 = attrs.get(0);
+        for(Attribute attr : attrs){
+            if(!attr.name.equalsIgnoreCase(attr1.name)){
+                return false;
+            }
+        }
+        return true;
+    }
     double getAccuracy(TrainingData[] examples){
         double count = 0;
         for(TrainingData t : examples){
@@ -110,5 +125,21 @@ class RandomForest{
             }
         }
         return count/examples.length;
+    }
+    public static void main(String[] args) {
+        TrainingData[] test = null;
+        try{
+            test = Reader.read("modifiedTest.data");
+        }catch(java.io.FileNotFoundException e){
+            System.out.println("FileNotFoundException");
+        }
+        RandomForest randForest = new RandomForest();
+        randForest.buildRandomForest();
+        DecisionTree dt;
+        for(int i = 0; i < 60; i++){
+            dt = randForest.randomForest[i];
+            System.out.println( i + " : " + id3.getAccuracy(dt, test));
+        }
+        System.out.println(randForest.getAccuracy(test));
     }
 }
