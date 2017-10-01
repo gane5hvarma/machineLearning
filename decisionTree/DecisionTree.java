@@ -25,7 +25,6 @@ class DecisionTree{
     void prune(){
         this.root.isleaf = true;
         this.root.classification = this.root.majorityClassification();
-        this.root.delete = false;
         this.children.clear();
     }
     int totalNumberofNodes(){
