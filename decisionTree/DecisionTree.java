@@ -143,16 +143,29 @@ class DecisionTree{
     }
     DecisionTree getElementById(DecisionTree dt, int id){
         /*
-        * 
+        * A function that returns a DecisionTree object whose id  = id. Very 
+        * useful while pruning.
+        * @dt : a tree root that has DecisioonTree node with id = id
+        * @id : unique identification for a tree node.
+        * return_value : A decisionTree whose id = id
         */
+        // req stores the required decision Tree
         DecisionTree req = null;
         if(dt.id == id){
+            // if the current decisionTree has required id, we are done. It is 
+            // the required decision tree.
             req = dt;
+            return req;
         }
         if((dt.root.isleaf || dt.root.data.size() == 0) && dt.id != id){
+            // if the dt.id != id and it's not leaf or has children, then we 
+            // can't do anything else. 
             req = null;
         }
         for(DecisionTree child : dt.children){
+            // If we reached here, it means the children of the current decision
+            // tree will have the required node. Call the same function again
+            // on each child.
             DecisionTree temp = getElementById(child ,id);
             if(temp != null){
                 req = temp;
@@ -170,26 +183,49 @@ class DecisionTree{
         */
         String classification = null;
         if(tree.root.isleaf){
+            // if we reached the root while traversing the tree, we are done. 
+            // just return the classification here.
             return tree.root.classification;
         }
         if(tree.root.splitAttribute == null){
+            // if splitAttribute == null, it means either it is conditional node
+            // or it is a leaf node which hasn't been assigned as leaf.
             if(tree.children.size() == 0){
+                // it's a leaf node. Return the classifcation.
                 return tree.root.classification;
             }
+            // if its' a conditional node, it has only one child. Call the same
+            // function on its only child.
             classification = getClassification(tree.children.get(0), t);
         }
         else{
+            // If it reached here, it means we are on a node that has splitattr
+            // Any node that has a split attribute will have number of paths 
+            // equal to number of possible values it can take. Therefore we have
+            // to choose which path to follow.
+            // index : indexo f the splitAttribute
             int index = tree.root.splitAttribute.index;
+            // value : value that the training Data has of the splitAttribute
             String value = t.attributes[index];
             if(value.equals("?")){
+                // "?" represents missing value. In case of a missing value, we 
+                // just take the most common value for that attribute at that 
+                // node
                 value = id3.getMostCommonValue(tree.root.data, index);
             }
             for(DecisionTree child : tree.children){
+                // now that we have the value, we have to check which path to 
+                // follow in the tree. We have to follow a path whose splitValue
+                // is same as our current value.
                 if(value.equalsIgnoreCase(child.root.splitValue)){
                     if(child.root.data.size() == 0){
+                        // we've reached the child node. Just return the 
+                        // classification.
                         return child.root.classification;
                     }
                     if(child.root.data.get(0).attributes[index].equals(value)){
+                        // there are still nodes to traverse. Call the same 
+                        // function again.
                         classification = getClassification(child, t);
                     }
                 }
