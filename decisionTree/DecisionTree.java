@@ -7,7 +7,6 @@ class DecisionTree{
     TreeNode root;
     int id = 0;
     int level = 0;
-    // ArrayList<Integer> levels = new ArrayList<Integer>();
     ArrayList<DecisionTree> children = new ArrayList<DecisionTree>();
     DecisionTree(TreeNode root){
         this.root = root;
@@ -19,8 +18,6 @@ class DecisionTree{
         }
         this.id = dt.id;
         this.level = dt.level;
-    }
-    DecisionTree(){
     }
     void addChild(DecisionTree child){
         this.children.add(child);
@@ -108,13 +105,10 @@ class DecisionTree{
         * Iniitial call should be tree.getClassification(tree,t)
         */
         String classification = null;
-        // System.out.println("here");
         if(tree.root.isleaf){
-            // System.out.println("it's leaf"+tree.root.classification);
             return tree.root.classification;
         }
         if(tree.root.splitAttribute == null){
-            // System.out.println("It's a conditional Node");
             if(tree.children.size() == 0){
                 return tree.root.classification;
             }
@@ -125,19 +119,13 @@ class DecisionTree{
             String value = t.attributes[index];
             if(value.equals("?")){
                 value = id3.getMostCommonValue(tree.root.data, index);
-                // System.out.println("in ? block, value is"+value);
             }
-            // System.out.println("it's a treenode with SplitAttribute index:"+index +" and Value from t is:" + value +
-                // " it has number of children:"+tree.children.size());
             for(DecisionTree child : tree.children){
                 if(value.equalsIgnoreCase(child.root.splitValue)){
-                    // System.out.println("child's splitvalue is"+child.root.splitValue);
                     if(child.root.data.size() == 0){
                         return child.root.classification;
                     }
                     if(child.root.data.get(0).attributes[index].equals(value)){
-                        // System.out.println(child.root.data.get(0).attributes[index]);
-                        // System.out.println(classification);
                         classification = getClassification(child, t);
                     }
                 }

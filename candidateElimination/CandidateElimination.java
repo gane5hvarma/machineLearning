@@ -28,9 +28,17 @@ class CandidateElimination{
         specificBoundary.add(mostSpecific);
     }
     void minifyGeneralBoundary(){
+        /*
+        * We have to remove from GeneralBoundary any Hypothesis that is less 
+        * general than another hypothesis in GenearlBoundary. This function
+        * takes care of it.
+        */
         ArrayList <Hypothesis> remove = new ArrayList<> ();
         for(int i = 0; i < generalBoundary.size(); i++){
-            for(int j = i+1; j < generalBoundary.size(); j++){
+            for(int j = 0; j < generalBoundary.size(); j++){
+                if(i == j){
+                    continue;
+                }
                 Hypothesis a = generalBoundary.get(i);
                 Hypothesis b = generalBoundary.get(j);
                 if (a.isMoreGeneral(b)){
@@ -43,6 +51,11 @@ class CandidateElimination{
         }
     }
     boolean acceptableSpecialization(Hypothesis h){
+        /*
+        * For a hypothesis to be added to general boundary, there shoudl be at-
+        * least one hypothesis in specific boundary that is more specific than
+        * the hypothesis under consideration.
+        */
         for (Hypothesis s: specificBoundary ) {
             if(h.isMoreGeneral(s)){
                 return true;
@@ -61,7 +74,6 @@ class CandidateElimination{
             if (g.isEqual(g.attributes[i], t.attributes[i])) {
                 if(g.attributes[i] == Hypothesis.ALL){
                     int[] acceptable_values = g.acceptableValues(i);
-                    int flag = 0;
                     for (int acceptable: acceptable_values ) {
                         int[] new_attributes = new int[g.attributes.length];
                         int l = 0;
@@ -74,12 +86,7 @@ class CandidateElimination{
                             if (acceptableSpecialization(h)) {
                                 minSpec.add(h);   
                             }
-                        }else{
-                            flag++;
-                        }                
-                    }
-                    if (flag == acceptable_values.length) {
-                        return;    
+                        }               
                     }
                 }
                 else if (g.attributes[i] == Hypothesis.NONE) {
@@ -145,7 +152,6 @@ class CandidateElimination{
         }
         // Dealing with General Boundary
         for (int i = 0; i < generalBoundary.size() ; i++ ) {
-            // Test for inconsistency with negative examples once.
             if(!generalBoundary.get(i).isConsistent(t)){
                 Hypothesis g = generalBoundary.get(i);
                 generalBoundary.remove(i);
@@ -201,7 +207,7 @@ class CandidateElimination{
         return;
     }
     public static void main(String[] args) {
-        CandidateElimination ce = new CandidateElimination(3);
+        CandidateElimination ce = new CandidateElimination(2);
         ce.candidateElimination();
     }
 }

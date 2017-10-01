@@ -4,10 +4,10 @@ import java.util.*;
 import java.lang.Math;
 
 class RandomForest{
-    DecisionTree[] randomForest = new DecisionTree[60];
+    DecisionTree[] randomForest = new DecisionTree[29];
     id3 runner = new id3();
     void buildRandomForest(){
-        for(int i = 0; i < 60; i++){
+        for(int i = 0; i < 29; i++){
             ArrayList<TrainingData> trainingData = getTrainingData();
             randomForest[i] = buildTree(trainingData, runner.attributes);
         }
@@ -23,10 +23,10 @@ class RandomForest{
     ArrayList<Attribute> getAttributes(ArrayList<Attribute> oldAttrs){
         ArrayList<Attribute> newAttrs = new ArrayList<Attribute>();
         int len;
-        if(oldAttrs.size() <= 4){
+        if(oldAttrs.size() <= 5){
             len = oldAttrs.size();
         }else{
-            len = 4;
+            len = 5;
         }
         for(int i = 0; i < len; i ++){
             int rand = (int)(Math.random() * len);
@@ -89,7 +89,7 @@ class RandomForest{
         int posExample = 0;
         int negExample = 0;
         String classification = null;
-        for(int i = 0; i < 60; i ++){
+        for(int i = 0; i < 29; i ++){
             classification = randomForest[i].getClassification(randomForest[i], t);
             if(classification.equalsIgnoreCase("<=50K")){
                 posExample++;
@@ -134,12 +134,12 @@ class RandomForest{
             System.out.println("FileNotFoundException");
         }
         RandomForest randForest = new RandomForest();
+        double currTime = (double)System.currentTimeMillis()/1000;
         randForest.buildRandomForest();
-        DecisionTree dt;
-        for(int i = 0; i < 60; i++){
-            dt = randForest.randomForest[i];
-            System.out.println( i + " : " + id3.getAccuracy(dt, test));
-        }
+        double endTime = (double)System.currentTimeMillis()/1000;
+        System.out.println((endTime - currTime)/60);
         System.out.println(randForest.getAccuracy(test));
+        double enndTime = (double)System.currentTimeMillis()/1000;
+        System.out.println((enndTime - endTime)/60);
     }
 }
