@@ -80,11 +80,9 @@ class Prune{
                     // If the newAccuracy was lesser than bestAccuracy,
                     // copiedTree would have been equal to the updatedTree before
                     // it was pruned.
-                    System.out.println("pruned to "+newAccuracy);
                     bestAccuracy = newAccuracy;
                     copiedTree = new DecisionTree(updatedTree); 
                 }
-                System.out.println("current accuracy" + bestAccuracy);
                 // update the updated tree.
                 updatedTree = new DecisionTree(copiedTree);
             }
@@ -92,9 +90,9 @@ class Prune{
         long endTime = System.currentTimeMillis();   
         double time = (double)(endTime - startTime)/60000;
         // print time taken.
-        System.out.println(time);
+        System.out.println("time taken to prune:" + time);
         // print accuracy.
-        System.out.println(bestAccuracy);
+        System.out.println("accuracy after pruning:" + bestAccuracy);
         return updatedTree;
     }
 }
