@@ -4,6 +4,8 @@ import java.util.*;
 import java.io.*;
 
 class id3{
+    /*
+    */
     ArrayList<Attribute> attributes = new ArrayList<Attribute>();
     ArrayList<TrainingData> data = new ArrayList<TrainingData>();
     int id = 0;
@@ -47,13 +49,15 @@ class id3{
             double entropy = PreProcessor.getEntropy(examples);
             Attribute bestAttribute = PreProcessor.getBestAttribute(
                                          considerAttributes, examples, entropy);
+            int bestIndex = bestAttribute.index;
             node.setSplitAttribute(bestAttribute);
-            for (String val: TrainingData.getAcceptedValues(bestAttribute.index)){
-                ArrayList<TrainingData> new_examples = new ArrayList<TrainingData>();
+            for (String val: TrainingData.getAcceptedValues(bestIndex)){
+                ArrayList<TrainingData> new_examples = 
+                                                  new ArrayList<TrainingData>();
                 for(TrainingData example: examples){
-                    String currValue = example.attributes[bestAttribute.index];
+                    String currValue = example.attributes[bestIndex];
                     if(currValue == "?"){
-                        currValue = getMostCommonValue(examples, bestAttribute.index);
+                        currValue = getMostCommonValue(examples, bestIndex);
                     }
                     if(currValue.equalsIgnoreCase(val)){
                         new_examples.add(example);
@@ -66,7 +70,8 @@ class id3{
                     final_child.id = this.id++;
                     final_child.root.isleaf = true;
                     final_child.root.splitValue = val;
-                    final_child.root.classification = node.majorityClassification();
+                    final_child.root.classification = 
+                                                 node.majorityClassification();
                     tree.addChild(final_child);
                 }
                 else{
@@ -77,7 +82,8 @@ class id3{
                     child_tree.id = this.id++;
                     if(!new_child.isleaf){
                         considerAttributes.remove(bestAttribute);
-                        child_tree.addChild(buildTree(new_examples,considerAttributes,level+1));
+                        child_tree.addChild(buildTree(new_examples,
+                                                  considerAttributes,level+1));
                         tree.addChild(child_tree);
                     }else{
                         tree.addChild(child_tree);
@@ -87,7 +93,8 @@ class id3{
             return tree;
         }
     }
-    static String getMostCommonValue(ArrayList<TrainingData> examples, int index){
+    static String getMostCommonValue(ArrayList<TrainingData> examples,
+                                                                    int index){
         Map<String, Integer> map = new HashMap<String, Integer>();
         String[] acceptedValues = TrainingData.getAcceptedValues(index);
         for(String value: acceptedValues){
