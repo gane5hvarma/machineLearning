@@ -5,8 +5,14 @@ import java.util.ArrayList;
 
 
 class Driver{
+    /*
+    * Just a simple class to a) build a decision tree and find accuracy
+    *                        b) prune the said decison tree
+    *                        c) build a random forest
+    */
     public static void main(String[] args) {
         id3 id = new id3();
+        System.out.println("building the decison tree...");
         double currTime = (double)System.currentTimeMillis();
         DecisionTree dt = id.buildTree(id.data, id.attributes , 0);
         double doneTime = (double)System.currentTimeMillis();
@@ -29,11 +35,13 @@ class Driver{
         DecisionTree prunedTree = pruner.prune();
         RandomForest randForest = new RandomForest();
         currTime = (double)System.currentTimeMillis();
+        System.out.println("building random forest...");
         randForest.buildRandomForest();
         double endTime = (double)System.currentTimeMillis();
         System.out.println("Time Taken to build RandomForest: " + 
                                     (endTime - currTime)/60000 + " Minutes");
         currTime = (double)System.currentTimeMillis();
+        System.out.println("finding accuracy of random forest...");
         System.out.println("accuracy with RandomForest is : " + 
                                                   randForest.getAccuracy(test));
         endTime = (double)System.currentTimeMillis();
