@@ -1,0 +1,64 @@
+running candidate elimination for class:1
+Specific boundary is:  <ALL, 0, ALL, 1, ALL, ALL, ALL, ALL, 1, 1, 0, ALL, ALL, ALL, ALL, ALL, >
+
+General boundary is:  1<ALL, ALL, ALL, 1, ALL, ALL, ALL, ALL, ALL, ALL, ALL, ALL, ALL, ALL, ALL, ALL, >
+---------------------------------------------
+running candidate elimination for class:2
+Specific boundary is:  <0, 1, 1, 0, ALL, ALL, ALL, 0, 1, 1, 0, 0, 2, 1, ALL, ALL, >
+
+General boundary is:  2<ALL, 1, ALL, ALL, ALL, ALL, ALL, ALL, ALL, ALL, ALL, ALL, ALL, ALL, ALL, ALL, >
+<ALL, ALL, ALL, 0, ALL, ALL, ALL, 0, 1, ALL, ALL, ALL, ALL, ALL, ALL, ALL, >
+---------------------------------------------
+running candidate elimination for class:3
+concept can't be learned.
+---------------------------------------------
+running candidate elimination for class:4
+Specific boundary is:  <0, 0, 1, 0, 0, 1, ALL, 1, 1, 0, ALL, 1, 0, 1, ALL, ALL, >
+
+General boundary is:  11<ALL, ALL, ALL, ALL, ALL, ALL, ALL, ALL, 1, 0, ALL, ALL, ALL, ALL, ALL, ALL, >
+<ALL, ALL, 1, ALL, ALL, ALL, ALL, ALL, ALL, ALL, ALL, 1, ALL, ALL, ALL, ALL, >
+<ALL, ALL, ALL, 0, ALL, ALL, ALL, ALL, ALL, ALL, ALL, 1, ALL, ALL, ALL, ALL, >
+<ALL, ALL, ALL, ALL, ALL, ALL, ALL, ALL, ALL, 0, ALL, 1, ALL, ALL, ALL, ALL, >
+<ALL, ALL, ALL, ALL, ALL, 1, ALL, ALL, ALL, 0, ALL, ALL, 0, ALL, ALL, ALL, >
+<0, ALL, ALL, ALL, ALL, ALL, ALL, 1, ALL, ALL, ALL, 1, ALL, ALL, ALL, ALL, >
+<ALL, ALL, 1, ALL, ALL, ALL, ALL, 1, ALL, 0, ALL, ALL, ALL, ALL, ALL, ALL, >
+<ALL, ALL, 1, ALL, ALL, 1, ALL, ALL, 1, ALL, ALL, ALL, 0, ALL, ALL, ALL, >
+<0, 0, ALL, ALL, ALL, ALL, ALL, 1, ALL, 0, ALL, ALL, 0, ALL, ALL, ALL, >
+<0, 0, 1, 0, ALL, ALL, ALL, ALL, 1, ALL, ALL, ALL, 0, ALL, ALL, ALL, >
+<ALL, ALL, 1, ALL, ALL, 1, ALL, 1, ALL, ALL, ALL, ALL, 0, ALL, ALL, ALL, >
+---------------------------------------------
+running candidate elimination for class:5
+Specific boundary is:  <0, 0, 1, 0, 0, 1, ALL, 1, 1, 1, ALL, 0, 4, ALL, 0, 0, >
+
+General boundary is:  19<ALL, 0, ALL, ALL, ALL, 1, ALL, ALL, ALL, 1, ALL, ALL, ALL, ALL, ALL, 0, >
+<ALL, ALL, ALL, ALL, 0, 1, ALL, ALL, ALL, 1, ALL, ALL, ALL, ALL, ALL, 0, >
+<ALL, ALL, ALL, ALL, ALL, 1, ALL, 1, ALL, 1, ALL, ALL, ALL, ALL, ALL, 0, >
+<ALL, 0, ALL, 0, ALL, 1, ALL, ALL, ALL, 1, ALL, ALL, ALL, ALL, ALL, ALL, >
+<ALL, 0, ALL, ALL, ALL, 1, ALL, ALL, 1, ALL, ALL, 0, ALL, ALL, ALL, 0, >
+<0, 0, ALL, ALL, ALL, 1, ALL, ALL, ALL, 1, ALL, 0, ALL, ALL, ALL, ALL, >
+<ALL, ALL, ALL, ALL, 0, 1, ALL, ALL, 1, ALL, ALL, 0, ALL, ALL, ALL, 0, >
+<ALL, ALL, ALL, ALL, 0, 1, ALL, 1, ALL, 1, ALL, 0, ALL, ALL, ALL, ALL, >
+<0, ALL, ALL, ALL, ALL, 1, ALL, 1, ALL, ALL, ALL, 0, ALL, ALL, ALL, ALL, >
+<ALL, ALL, 1, ALL, ALL, 1, ALL, 1, ALL, 1, ALL, ALL, ALL, ALL, ALL, ALL, >
+<0, 0, 1, ALL, ALL, 1, ALL, ALL, ALL, 1, ALL, ALL, ALL, ALL, ALL, ALL, >
+<ALL, ALL, 1, ALL, ALL, 1, ALL, 1, ALL, ALL, ALL, 0, ALL, ALL, ALL, ALL, >
+<ALL, ALL, ALL, 0, ALL, 1, ALL, 1, ALL, 1, ALL, ALL, ALL, ALL, ALL, ALL, >
+<0, 0, 1, ALL, ALL, 1, ALL, ALL, 1, ALL, ALL, 0, ALL, ALL, ALL, ALL, >
+<ALL, 0, 1, ALL, 0, ALL, ALL, 1, ALL, 1, ALL, ALL, ALL, ALL, ALL, 0, >
+<ALL, 0, ALL, 0, ALL, 1, ALL, ALL, 1, ALL, ALL, 0, ALL, ALL, ALL, ALL, >
+<ALL, 0, ALL, 0, ALL, ALL, ALL, ALL, 1, ALL, ALL, 0, ALL, ALL, ALL, 0, >
+<ALL, 0, ALL, 0, ALL, ALL, ALL, ALL, 1, 1, ALL, ALL, ALL, ALL, ALL, 0, >
+<0, 0, ALL, ALL, ALL, ALL, ALL, ALL, 1, 1, ALL, 0, ALL, ALL, ALL, 0, >
+---------------------------------------------
+running candidate elimination for class:6
+Specific boundary is:  <ALL, 0, 1, 0, ALL, 0, ALL, 0, 0, 1, ALL, 0, 6, 0, ALL, 0, >
+
+General boundary is:  5<ALL, 0, 1, ALL, ALL, 0, ALL, ALL, ALL, ALL, ALL, ALL, ALL, 0, ALL, ALL, >
+<ALL, ALL, 1, ALL, ALL, ALL, ALL, ALL, 0, 1, ALL, ALL, ALL, ALL, ALL, ALL, >
+<ALL, ALL, ALL, 0, ALL, ALL, ALL, 0, ALL, 1, ALL, ALL, ALL, 0, ALL, ALL, >
+<ALL, 0, 1, ALL, ALL, 0, ALL, 0, 0, ALL, ALL, ALL, ALL, ALL, ALL, ALL, >
+<ALL, 0, 1, 0, ALL, ALL, ALL, 0, ALL, 1, ALL, ALL, ALL, ALL, ALL, 0, >
+---------------------------------------------
+running candidate elimination for class:7
+concept can't be learned.
+---------------------------------------------

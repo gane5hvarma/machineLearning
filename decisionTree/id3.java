@@ -2,6 +2,7 @@ package decision_tree;
 
 import java.util.*;
 import java.io.*;
+import java.lang.Math;
 
 class id3{
     /*
@@ -16,6 +17,7 @@ class id3{
     */
     ArrayList<Attribute> attributes = new ArrayList<Attribute>();
     ArrayList<TrainingData> data = new ArrayList<TrainingData>();
+    ArrayList<TrainingData> validationData = new ArrayList<TrainingData>();
     int id = 0;
     id3(){
         TrainingData[] examples;
@@ -28,6 +30,18 @@ class id3{
         setAttributes();
         for (TrainingData example: examples) {
             this.data.add(example);
+        }
+        makeValidationData();
+    }
+    void makeValidationData(){
+        if(this.data == null){
+            return;
+        }
+        int validationSize = this.data.size()/3;
+        for(int i = 0; i < validationSize; i++){
+            int randIndex = (int)(Math.random() * validationSize);
+            this.validationData.add(this.data.get(randIndex));
+            this.data.remove(randIndex);
         }
     }
     void setAttributes(){
@@ -228,7 +242,9 @@ class id3{
             String actualValue = t.attributes[t.attributes.length - 1];
             String obtainedValue = dt.getClassification(dt,t);
             // adding "." because testData has a traling "." at the end.
-            obtainedValue = obtainedValue + ".";
+            if(actualValue.charAt(actualValue.length() -1) == '.'){
+                obtainedValue = obtainedValue + ".";
+            }
             if(actualValue.equals(obtainedValue)){
                 // increment count if our tree has classified the training data
                 // correctly.
@@ -237,18 +253,5 @@ class id3{
         }
         // return the accuracy
         return count/examples.length;
-    }
-    public static void main(String[] args) {
-        id3 id = new id3();
-        TrainingData[] test = null;
-        try{
-            test = Reader.read("modifiedTest.data");
-        }catch(FileNotFoundException e){
-            System.out.println("FileNotFoundException");
-        }
-        DecisionTree dt = id.buildTree(id.data, id.attributes , 0);
-        double accuracy = id.getAccuracy(dt, test);
-        Prune pruner = new Prune(dt, accuracy, test);
-        DecisionTree prunedTree = pruner.prune();
     }
 }

@@ -5,8 +5,15 @@ import java.lang.Math;
 
 class RandomForest{
     DecisionTree[] randomForest = new DecisionTree[29];
+    TrainingData[] examples = null;
     id3 runner = new id3();
     void buildRandomForest(){
+        try{
+            examples = Reader.read("modifiedAdults.data");
+        }catch(java.io.FileNotFoundException e){
+            System.out.println("file not found");
+            examples = null;
+        }
         for(int i = 0; i < 29; i++){
             ArrayList<TrainingData> trainingData = getTrainingData();
             randomForest[i] = buildTree(trainingData, runner.attributes);
@@ -16,7 +23,7 @@ class RandomForest{
         ArrayList<TrainingData> data = new ArrayList<TrainingData>();
         for(int i = 0; i < 32561; i++){
             int rand = (int)(Math.random() * 32561);
-            data.add(runner.data.get(rand));
+            data.add(this.examples[rand]);
         }
         return data;
     }
@@ -52,7 +59,8 @@ class RandomForest{
             node.setSplitAttribute(bestAttr);
             int index = bestAttr.index;
             for(String val : TrainingData.getAcceptedValues(index)){
-                ArrayList<TrainingData> nExamples = new ArrayList<TrainingData>();
+                ArrayList<TrainingData> nExamples =
+                                                 new ArrayList<TrainingData>();
                 for(TrainingData example : examples){
                     String currValue = example.attributes[index];
                     if(currValue == "?"){
@@ -67,7 +75,8 @@ class RandomForest{
                     DecisionTree final_child = new DecisionTree(final_leaf);
                     final_child.root.isleaf = true;
                     final_child.root.splitValue = val;
-                    final_child.root.classification = node.majorityClassification();
+                    final_child.root.classification =
+                                                  node.majorityClassification();
                     tree.addChild(final_child);
                 }else{
                     TreeNode new_child = new TreeNode(nExamples);
@@ -75,7 +84,8 @@ class RandomForest{
                     DecisionTree child_tree = new DecisionTree(new_child);
                     if(!new_child.isleaf){
                         considerAttributes.remove(bestAttr);
-                        child_tree.addChild(buildTree(nExamples, considerAttributes));
+                        child_tree.addChild(buildTree(nExamples,
+                                                           considerAttributes));
                         tree.addChild(child_tree);
                     }else{
                         tree.addChild(child_tree);
@@ -90,7 +100,8 @@ class RandomForest{
         int negExample = 0;
         String classification = null;
         for(int i = 0; i < 29; i ++){
-            classification = randomForest[i].getClassification(randomForest[i], t);
+            classification =
+                          randomForest[i].getClassification(randomForest[i], t);
             if(classification.equalsIgnoreCase("<=50K")){
                 posExample++;
             }else{
@@ -125,21 +136,5 @@ class RandomForest{
             }
         }
         return count/examples.length;
-    }
-    public static void main(String[] args) {
-        TrainingData[] test = null;
-        try{
-            test = Reader.read("modifiedTest.data");
-        }catch(java.io.FileNotFoundException e){
-            System.out.println("FileNotFoundException");
-        }
-        RandomForest randForest = new RandomForest();
-        double currTime = (double)System.currentTimeMillis()/1000;
-        randForest.buildRandomForest();
-        double endTime = (double)System.currentTimeMillis()/1000;
-        System.out.println((endTime - currTime)/60);
-        System.out.println(randForest.getAccuracy(test));
-        double enndTime = (double)System.currentTimeMillis()/1000;
-        System.out.println((enndTime - endTime)/60);
     }
 }

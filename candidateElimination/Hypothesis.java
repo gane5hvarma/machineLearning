@@ -102,22 +102,43 @@ class Hypothesis{
         }
         return false;
     }
-
+    boolean isMoreSpecific(Hypothesis h){
+        int posCount = 0;
+        for(int i = 0; i < this.attributes.length; i++){
+            int attr1 = this.attributes[i];
+            int attr2 = h.attributes[i];
+            if(attr1 == attr2){
+                continue;
+            }
+            if(attr1 == NONE || attr2 == ALL){
+                posCount++;
+                continue;
+            }
+            if(attr1 == ALL || attr2 == NONE){
+                return false;
+            }else{
+                return false;
+            }
+        }
+        if(posCount > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
     void printHypothesis(){
         /*
         * An utility function to pring the hypothesis
         */
         System.out.print("<");
         for (int i = 0; i < this.attributes.length; i++ ) {
+            int attr = this.attributes[i];
+            if(attr == Hypothesis.ALL){
+                System.out.print("ALL" +", ");    
+            }else{
             System.out.print(this.attributes[i] +", ");
+            }
         }
         System.out.println(">");
     }
-    // public static void main(String[] args) {
-    //     int[] attr1 = {999, 0, 999, 0, 999, 999, 999, 999, 999, 999, 999, 0, 0, 999, 1, 999};
-    //     int[] attr2 ={0, 0, 999, 0, 0, 999, 1, 1, 1, 999, 999, 0, 0, 1, 0, 0};
-    //     Hypothesis h1 = new Hypothesis(attr1);
-    //     Hypothesis h2 = new Hypothesis(attr2);
-    //     System.out.println(h1.isMoreGeneral(h2));
-    // }
 }

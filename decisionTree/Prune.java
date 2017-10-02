@@ -63,6 +63,8 @@ class Prune{
                 // level was pruned.
                 break;
             }
+            System.out.println("accuracy on validationData is: "
+                                                              + bestAccuracy);
             for(int id: ids){
                 // for each id in the ids list, get the corresponding node from
                 // updatedTree. Note that, though updatedTree and bestTree had 
@@ -92,7 +94,8 @@ class Prune{
         // print time taken.
         System.out.println("time taken to prune:" + time);
         // print accuracy.
-        System.out.println("accuracy after pruning:" + bestAccuracy);
+        System.out.println("accuracy after pruning on validation data:"
+                                                                + bestAccuracy);
         return updatedTree;
     }
 }

@@ -13,8 +13,6 @@ class CandidateElimination{
     * mostSpecific is the mostSpecifc Hypothesis, contiaing NONE for all of its
     * attributes.
     */
-    Hypothesis mostGeneral = new Hypothesis(Hypothesis.GENERAL);
-    Hypothesis mostSpecific = new Hypothesis(Hypothesis.SPECIFIC);
     ArrayList<Hypothesis> generalBoundary = new ArrayList<Hypothesis>();
     ArrayList<Hypothesis> specificBoundary = new ArrayList<Hypothesis>();
     ArrayList<TrainingData> trainingData;
@@ -24,6 +22,19 @@ class CandidateElimination{
         } catch(FileNotFoundException e){
             System.out.println("File not found!");
         }
+        int[] General = new int[]{999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999};
+        int[] Specific = new int[]{111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111};
+        Hypothesis mostGeneral = new Hypothesis(General);
+        Hypothesis mostSpecific = new Hypothesis(Specific);
+        generalBoundary.add(mostGeneral);
+        specificBoundary.add(mostSpecific);
+    }
+    CandidateElimination(ArrayList<TrainingData> trainingData){
+        this.trainingData = trainingData;
+        int[] General = new int[]{999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999};
+        int[] Specific = new int[]{111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111};
+        Hypothesis mostGeneral = new Hypothesis(General);
+        Hypothesis mostSpecific = new Hypothesis(Specific);
         generalBoundary.add(mostGeneral);
         specificBoundary.add(mostSpecific);
     }
@@ -188,10 +199,16 @@ class CandidateElimination{
         for (int i = 0; i < this.trainingData.size() ; i++) {
             TrainingData t = this.trainingData.get(i);
             if(t.attributes[Hypothesis.TYPE] == 1){
+                // System.out.println("here");
                 postiveEncounter(t);
             }else{
+                // System.out.println("there");
                 negativeEncounter(t);
             }
+        }
+        if(specificBoundary.size() == 0){
+            System.out.println("concept can't be learned.");
+            return;
         }
         System.out.print("Specific boundary is:  ");
         for (int i = 0; i < specificBoundary.size() ; i ++ ) {
@@ -205,9 +222,5 @@ class CandidateElimination{
             h.printHypothesis();
         }
         return;
-    }
-    public static void main(String[] args) {
-        CandidateElimination ce = new CandidateElimination(2);
-        ce.candidateElimination();
     }
 }

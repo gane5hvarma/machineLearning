@@ -1,6 +1,8 @@
 package decision_tree;
 
 import java.util.*;
+import java.util.ArrayList;
+
 
 class Driver{
     public static void main(String[] args) {
@@ -19,8 +21,14 @@ class Driver{
         System.out.println("determining accuracy....");
         double accuracy = id.getAccuracy(dt, test);
         System.out.println("accuracy before pruning: " + accuracy);
-        Prune pruner = new Prune(dt, accuracy, test);
+        TrainingData[] validationData = 
+                                     new TrainingData[id.validationData.size()]; 
+        validationData = id.validationData.toArray(validationData);
+        Prune pruner = new Prune(dt, accuracy, validationData);
+        System.out.println("Pruning. This might take some time...");
         DecisionTree prunedTree = pruner.prune();
+        System.out.println("accuracy on test data after pruning: " +
+                                              id.getAccuracy(prunedTree, test));
         RandomForest randForest = new RandomForest();
         currTime = (double)System.currentTimeMillis();
         randForest.buildRandomForest();
