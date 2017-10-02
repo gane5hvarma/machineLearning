@@ -22,17 +22,10 @@ class CandidateElimination{
         } catch(FileNotFoundException e){
             System.out.println("File not found!");
         }
-        int[] General = new int[]{999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999};
-        int[] Specific = new int[]{111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111};
-        Hypothesis mostGeneral = new Hypothesis(General);
-        Hypothesis mostSpecific = new Hypothesis(Specific);
-        generalBoundary.add(mostGeneral);
-        specificBoundary.add(mostSpecific);
-    }
-    CandidateElimination(ArrayList<TrainingData> trainingData){
-        this.trainingData = trainingData;
-        int[] General = new int[]{999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999};
-        int[] Specific = new int[]{111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111, 111};
+        int[] General = new int[]{999, 999, 999, 999, 999, 999, 999,
+                                   999, 999, 999, 999, 999, 999, 999, 999, 999};
+        int[] Specific = new int[]{111, 111, 111, 111, 111, 111, 111, 111, 111,
+                                             111, 111, 111, 111, 111, 111, 111};
         Hypothesis mostGeneral = new Hypothesis(General);
         Hypothesis mostSpecific = new Hypothesis(Specific);
         generalBoundary.add(mostGeneral);

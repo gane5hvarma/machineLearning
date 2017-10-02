@@ -11,7 +11,7 @@ class Driver{
         DecisionTree dt = id.buildTree(id.data, id.attributes , 0);
         double doneTime = (double)System.currentTimeMillis();
         System.out.println("Time taken to build the tree: " + 
-                                                   (doneTime - currTime)/60000);
+                                        (doneTime - currTime)/60000 + "Minutes");
         TrainingData[] test = null;
         try{
             test = Reader.read("modifiedTest.data");
@@ -27,15 +27,17 @@ class Driver{
         Prune pruner = new Prune(dt, accuracy, validationData);
         System.out.println("Pruning. This might take some time...");
         DecisionTree prunedTree = pruner.prune();
-        System.out.println("accuracy on test data after pruning: " +
-                                              id.getAccuracy(prunedTree, test));
         RandomForest randForest = new RandomForest();
         currTime = (double)System.currentTimeMillis();
         randForest.buildRandomForest();
         double endTime = (double)System.currentTimeMillis();
         System.out.println("Time Taken to build RandomForest: " + 
-                                                    (endTime - currTime)/60000);
+                                    (endTime - currTime)/60000 + " Minutes");
+        currTime = (double)System.currentTimeMillis();
         System.out.println("accuracy with RandomForest is : " + 
                                                   randForest.getAccuracy(test));
+        endTime = (double)System.currentTimeMillis();
+        System.out.println("Time Taken to find accuracy: " + 
+                                    (endTime - currTime)/60000 + " Minutes");
     }
 }
