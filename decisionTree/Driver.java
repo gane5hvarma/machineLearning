@@ -17,7 +17,7 @@ class Driver{
         DecisionTree dt = id.buildTree(id.data, id.attributes , 0);
         double doneTime = (double)System.currentTimeMillis();
         System.out.println("Time taken to build the tree: " + 
-                                        (doneTime - currTime)/60000 + "Minutes");
+                                       (doneTime - currTime)/60000 + "Minutes");
         TrainingData[] test = null;
         try{
             test = Reader.read("modifiedTest.data");
@@ -27,12 +27,24 @@ class Driver{
         System.out.println("determining accuracy....");
         double accuracy = id.getAccuracy(dt, test);
         System.out.println("accuracy before pruning: " + accuracy);
+        currTime = (double)System.currentTimeMillis();
+        System.out.println("determining recall before pruning....");
+        id.getRecall(dt, test);
+        doneTime = (double)System.currentTimeMillis();
+        System.out.println("Time taken to find recall: " + 
+                                       (doneTime - currTime)/60000 + "Minutes");
         TrainingData[] validationData = 
                                      new TrainingData[id.validationData.size()]; 
         validationData = id.validationData.toArray(validationData);
         Prune pruner = new Prune(dt, accuracy, validationData);
         System.out.println("Pruning. This might take some time...");
         DecisionTree prunedTree = pruner.prune();
+        System.out.println("determining recall for pruned tree...");
+        currTime = (double)System.currentTimeMillis();
+        id.getRecall(prunedTree, test);
+        doneTime = (double)System.currentTimeMillis();
+        System.out.println("Time taken to find recall: " + 
+                                       (doneTime - currTime)/60000 + "Minutes");
         RandomForest randForest = new RandomForest();
         currTime = (double)System.currentTimeMillis();
         System.out.println("building random forest...");
@@ -44,6 +56,12 @@ class Driver{
         System.out.println("finding accuracy of random forest...");
         System.out.println("accuracy with RandomForest is : " + 
                                                   randForest.getAccuracy(test));
+        endTime = (double)System.currentTimeMillis();
+        System.out.println("Time Taken to find accuracy: " + 
+                                    (endTime - currTime)/60000 + " Minutes");
+        System.out.println("determining recall for random forest...");
+        currTime = (double)System.currentTimeMillis();
+        randForest.getRecall(test);
         endTime = (double)System.currentTimeMillis();
         System.out.println("Time Taken to find accuracy: " + 
                                     (endTime - currTime)/60000 + " Minutes");

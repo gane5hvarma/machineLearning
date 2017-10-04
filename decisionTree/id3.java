@@ -254,4 +254,32 @@ class id3{
         // return the accuracy
         return count/examples.length;
     }
+    static void getRecall(DecisionTree dt, TrainingData[] examples){
+        double posCount = 0;
+        double negCount = 0;
+        double posLength = 0;
+        double negLength = 0;
+        for(TrainingData t : examples){
+            String actualValue = t.attributes[t.attributes.length - 1];
+            String obtainedValue = dt.getClassification(dt, t);
+            if(actualValue.charAt(actualValue.length() -1) == '.'){
+                obtainedValue = obtainedValue + ".";
+            }
+            if(obtainedValue.equalsIgnoreCase("<=50K.")){
+                posLength++;
+                if(actualValue.equalsIgnoreCase(obtainedValue)){
+                    posCount++;
+                }
+            }
+            if(obtainedValue.equalsIgnoreCase(">50K.")){
+                negLength++;
+                if(actualValue.equalsIgnoreCase(obtainedValue)){
+                    negCount++;
+                }
+            }
+        }
+        // return the accuracy
+        System.out.println("recall for <=50K class is " + posCount/posLength);
+        System.out.println("recall for >50K class is " + negCount/negLength);
+    }
 }

@@ -1,0 +1,34 @@
+Time taken to build the tree: 0.03581666666666666 Minutes
+accuracy before pruning: 0.8183158282660771
+recall for <=50K before Pruning  is 0.8780215396888712
+recall for >50K before Pruning is 0.6185264281900694
+Time taken to find recall: 0.0166Minutes
+================================================================================
+time taken to prune: 1.2739166666666666 Minutes
+accuracy after pruning on validation data:0.8696213028655672
+recall for <=50K class after Pruning is 0.8401598401598401
+recall for >50K class after Pruning 0.7084252315835906
+Time taken to find recall: 0.0102Minutes
+================================================================================
+Time Taken to build RandomForest: 0.18165 Minutes
+accuracy with RandomForest is : 0.7868067072047171
+Time Taken to find accuracy: 0.9176166666666666 Minutes
+recall for <=50K class is 0.8004827031375704
+recall for >50K class is 0.6373626373626373
+Time Taken to find recall: 0.8500166666666666 Minutes
+================================================================================
+
+As can be seen, Pruning seems to be the best choice in our case. Original Tree,
+without any pruning, takes relatively less time (of 0.03 minutes) to be built and
+offers reasonable accuracy of 82% . Though recall for >50K is small (60%) it is
+acceptable for its simplicity.
+
+Pruning takes a lot of time to happen. In this case it is 1.2 minutes, but there
+have been times where it took more than 3 minutes to prune. Accuracy is obviously
+increased very much ( 87% ) after pruning and it comes as no surprise. Recall
+for >50K increased by about 70% but it came at a cost of decreasing the recall
+for the other class by about 4%. Pruning seems to be the best choice.
+
+Random Forest is the strangest of all. It takes more time than a simple tree, and 
+less time than purning. It offers less accuracy (78%) than both the above classifiers
+and offers worse recall too. It seems to be the worst choice to make in this case.
